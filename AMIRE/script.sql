@@ -1,11 +1,17 @@
 CREATE DATABASE Amire;
 USE Amire;
-CREATE TABLE Enseignant (
+CREATE TABLE Utilisateur(
     ID INT PRIMARY KEY,
     Nom VARCHAR(255),
     Prenom VARCHAR(255),
-    Experience INT,
     Mail VARCHAR(255),
+    MotDePasse VARCHAR(255),
+    Role VARCHAR(50)
+);
+CREATE TABLE Enseignant (
+    ID INT PRIMARY KEY,
+    UtilisateurID INT,
+    Experience INT,
     Telephone VARCHAR(20),
     SiteWeb VARCHAR(255),
     NiveauxSouhaites VARCHAR(255),
@@ -13,7 +19,8 @@ CREATE TABLE Enseignant (
     TypeContrat VARCHAR(50),
     TitresAcademiques TEXT,
     Evaluations TEXT,
-    AutresInformations TEXT
+    AutresInformations TEXT,
+    FOREIGN KEY (UtilisateurID) REFERENCES Utilisateur(ID)
 );
 CREATE TABLE Ecole (
     ID INT PRIMARY KEY,
