@@ -50,3 +50,23 @@ Organisez le projet comme mentionné dans le message précédent.
 - Les étapes ci-dessus sont une introduction de haut niveau. Vous devrez configurer les servlets, les modèles, les DAO, etc. comme décrit dans le message précédent.
 - Assurez-vous de tester régulièrement votre application pour vous assurer qu'elle fonctionne comme prévu.
 - Si vous rencontrez des problèmes avec Tomcat dans VSCode, n'hésitez pas à consulter la documentation ou à chercher des solutions en ligne. La communauté Java est vaste et vous trouverez probablement quelqu'un ayant rencontré un problème similaire.
+
+
+
+
+
+
+Déploiement wildfly :
+
+install extensions : Runtime Server Protocol UI, Community Server Connectors, Server connector
+
+add wildfly server : cmd + shift + p -> add server -> wildfly -> path to wildfly folder (or download it) (wildfly-30.0.0.Final)
+
+mvn clean install => give a war archive in target folder AMIRE/target/AMIRE.war
+
+add war to deploy : right click on wildfly server -> add war to deploy -> select war file
+or add war to standalone/deployments folder of wildfly installation
+
+start wildfly server : right click on wildfly server -> start server
+                                                war : <name>.war
+project is accessible on localhost:8080/AMIRE   localhost:8080/<name>
