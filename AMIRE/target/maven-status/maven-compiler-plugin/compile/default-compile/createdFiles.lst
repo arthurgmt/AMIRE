@@ -1,4 +1,8 @@
+models/Besoin.class
+models/Ecole.class
 dao/UtilisateurDAO.class
 App.class
+models/Decision.class
 util/DatabaseConfiguration.class
 models/Utilisateur.class
+models/Enseignant.class
