@@ -1,3 +1,4 @@
-util/DatabaseConfiguration.class
 dao/UtilisateurDAO.class
+App.class
+util/DatabaseConfiguration.class
 models/Utilisateur.class
