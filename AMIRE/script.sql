@@ -37,6 +37,12 @@ CREATE TABLE Besoin (
     Exigences TEXT,
     FOREIGN KEY (EcoleID) REFERENCES Ecole(ID)
 );
+CREATE TABLE Decision (
+    ID INT PRIMARY KEY,
+    Statut VARCHAR(50),
+    DateDecision DATE,
+    Commentaires TEXT
+);
 CREATE TABLE Candidature (
      ID INT AUTO_INCREMENT PRIMARY KEY,
      EnseignantID INT,
@@ -45,12 +51,6 @@ CREATE TABLE Candidature (
      FOREIGN KEY (EnseignantID) REFERENCES Enseignant(ID),
      FOREIGN KEY (BesoinID) REFERENCES Besoin(ID),
      FOREIGN KEY (DecisionID) REFERENCES Decision(ID)
-);
-CREATE TABLE Decision (
-    ID INT PRIMARY KEY,
-    Statut VARCHAR(50),
-    DateDecision DATE,
-    Commentaires TEXT
 );
 CREATE TABLE Competence (
     ID INT PRIMARY KEY,

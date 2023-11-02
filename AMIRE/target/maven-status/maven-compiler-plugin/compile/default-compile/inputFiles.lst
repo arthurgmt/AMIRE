@@ -1,2 +1,3 @@
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Enseignant.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Ecole.java
+/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/dao/UtilisateurDAO.java
+/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/util/DatabaseConfiguration.java
+/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Utilisateur.java
