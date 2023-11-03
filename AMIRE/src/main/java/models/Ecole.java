@@ -7,11 +7,21 @@ import javax.persistence.*;
 public class Ecole {
 
     @Id
+    @Column(name = "ID", nullable = false)
     private int ID;
+
+    @Column(name = "RaisonSociale", nullable = false)
     private String RaisonSociale;
+
+    @Column(name = "Adresse", nullable = false, columnDefinition="TEXT")
     private String Adresse;
+
+    @Column(name = "SiteWeb")
     private String SiteWeb;
+
+    @Column(name = "Contact")
     private String Contact;
+
 
     public Ecole(int ID, String RaisonSociale, String Adresse, String SiteWeb, String Contact) {
         this.ID = ID;

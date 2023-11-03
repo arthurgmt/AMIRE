@@ -7,13 +7,18 @@ import javax.persistence.*;
 public class EnseignantCompetence {
 
     @Id
+    @Column(name = "EnseignantID", nullable = false)
+    private int EnseignantID;
+
+    @Column(name = "CompetenceID", nullable = false)
+    private int CompetenceID;
+
     @ManyToOne
-    @JoinColumn(name = "EnseignantID")
+    @JoinColumn(name = "EnseignantID", insertable = false, updatable = false)
     private Enseignant enseignant;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "CompetenceID")
+    @JoinColumn(name = "CompetenceID", insertable = false, updatable = false)
     private Competence competence;
 
     public EnseignantCompetence(Enseignant enseignant, Competence competence) {

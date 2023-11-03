@@ -8,21 +8,43 @@ import java.util.Date;
 public class Enseignant {
 
     @Id
+    @Column(name = "ID", nullable = false)
     private int ID;
 
-    @OneToOne
-    @JoinColumn(name = "UtilisateurID", referencedColumnName = "ID")
+    @Column(name = "UtilisateurID", nullable = false)
+    private int UtilisateurID;
+
+    @Column(name = "Experience")
+    private Integer Experience;
+
+    @Column(name = "Telephone", nullable = false)
+    private String Telephone;
+
+    @Column(name = "SiteWeb")
+    private String SiteWeb;
+
+    @Column(name = "NiveauxSouhaites")
+    private String NiveauxSouhaites;
+
+    @Column(name = "Disponibilites", nullable = false)
+    private Date Disponibilites;
+
+    @Column(name = "TypeContrat")
+    private String TypeContrat;
+
+    @Column(name = "TitresAcademiques", columnDefinition="TEXT")
+    private String TitresAcademiques;
+
+    @Column(name = "Evaluations", columnDefinition="TEXT")
+    private String Evaluations;
+
+    @Column(name = "AutresInformations", columnDefinition="TEXT")
+    private String AutresInformations;
+
+    @ManyToOne
+    @JoinColumn(name = "UtilisateurID", insertable = false, updatable = false)
     private Utilisateur utilisateur;
 
-    private int Experience;
-    private String Telephone;
-    private String SiteWeb;
-    private String NiveauxSouhaites;
-    private Date Disponibilites;
-    private String TypeContrat;
-    private String TitresAcademiques;
-    private String Evaluations;
-    private String AutresInformations;
 
     public Enseignant(int ID, Utilisateur utilisateur, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations) {
         this.ID = ID;

@@ -7,15 +7,24 @@ import javax.persistence.*;
 public class Besoin {
 
     @Id
+    @Column(name = "ID", nullable = false)
     private int ID;
 
-    @ManyToOne
-    @JoinColumn(name = "EcoleID")
-    private Ecole ecole;
+    @Column(name = "EcoleID", nullable = false)
+    private int EcoleID;
 
+    @Column(name = "Periode", nullable = false)
     private String Periode;
+
+    @Column(name = "Remarques", columnDefinition="TEXT")
     private String Remarques;
+
+    @Column(name = "Exigences", nullable = false, columnDefinition="TEXT")
     private String Exigences;
+
+    @ManyToOne
+    @JoinColumn(name = "EcoleID", insertable = false, updatable = false)
+    private Ecole ecole;
     
     public Besoin(int ID, Ecole ecole, String Periode, String Remarques, String Exigences) {
         this.ID = ID;

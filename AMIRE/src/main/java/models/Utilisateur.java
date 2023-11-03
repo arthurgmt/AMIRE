@@ -17,19 +17,19 @@ public class Utilisateur {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
 
-    @Column(name = "Nom")
+    @Column(name = "Nom", nullable = false)
     private String Nom;
 
-    @Column(name = "Prenom")
+    @Column(name = "Prenom", nullable = false)
     private String Prenom;
 
-    @Column(name = "Mail")
+    @Column(name = "Mail", nullable = false)
     private String Mail;
 
-    @Column(name = "MotDePasse")
+    @Column(name = "MotDePasse", nullable = false)
     private String MotDePasse;
 
-    @Column(name = "Role")
+    @Column(name = "Role", nullable = false)
     private String Role;
 
     public Utilisateur(int ID, String Nom, String Prenom, String Mail, String MotDePasse, String Role) {

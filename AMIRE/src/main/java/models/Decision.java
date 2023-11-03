@@ -8,9 +8,16 @@ import java.util.Date;
 public class Decision {
 
     @Id
+    @Column(name = "ID", nullable = false)
     private int ID;
+
+    @Column(name = "Statut", nullable = false)
     private String Statut;
+
+    @Column(name = "DateDecision", nullable = false)
     private Date DateDecision;
+
+    @Column(name = "Commentaires", columnDefinition="TEXT")
     private String Commentaires;
 
     public Decision(int ID, String Statut, Date DateDecision, String Commentaires) {

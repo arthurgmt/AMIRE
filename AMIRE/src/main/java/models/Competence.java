@@ -8,9 +8,12 @@ import java.util.Set;
 public class Competence {
 
     @Id
+    @Column(name = "ID", nullable = false)
     private int ID;
-    private String NomCompetence;
 
+    @Column(name = "NomCompetence", nullable = false)
+    private String NomCompetence;
+    
     @ManyToMany(mappedBy = "competences")
     private Set<Enseignant> enseignants;
     

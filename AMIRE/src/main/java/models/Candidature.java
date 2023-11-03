@@ -8,18 +8,28 @@ public class Candidature {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false)
     private int ID;
 
+    @Column(name = "EnseignantID", nullable = false)
+    private int EnseignantID;
+
+    @Column(name = "BesoinID", nullable = false)
+    private int BesoinID;
+
+    @Column(name = "DecisionID", nullable = false)
+    private int DecisionID;
+
     @ManyToOne
-    @JoinColumn(name = "EnseignantID")
+    @JoinColumn(name = "EnseignantID", insertable = false, updatable = false)
     private Enseignant enseignant;
 
     @ManyToOne
-    @JoinColumn(name = "BesoinID")
+    @JoinColumn(name = "BesoinID", insertable = false, updatable = false)
     private Besoin besoin;
 
     @ManyToOne
-    @JoinColumn(name = "DecisionID")
+    @JoinColumn(name = "DecisionID", insertable = false, updatable = false)
     private Decision decision;
     
     public Candidature(int ID, Enseignant enseignant, Besoin besoin, Decision decision) {
