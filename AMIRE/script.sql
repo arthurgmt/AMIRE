@@ -44,7 +44,7 @@ CREATE TABLE Decision (
     Commentaires TEXT
 );
 CREATE TABLE Candidature (
-     ID INT AUTO_INCREMENT PRIMARY KEY,
+     ID SERIAL PRIMARY KEY,
      EnseignantID INT NOT NULL,
      BesoinID INT NOT NULL,
      DecisionID INT NOT NULL,
