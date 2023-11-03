@@ -5,4 +5,8 @@
 /Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Enseignant.java
 /Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Ecole.java
 /Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Utilisateur.java
+/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Competence.java
 /Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Decision.java
+/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/BesoinCompetence.java
+/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/EnseignantCompetence.java
+/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Candidature.java

@@ -1,8 +1,12 @@
 models/Besoin.class
+models/EnseignantCompetence.class
 models/Ecole.class
 dao/UtilisateurDAO.class
 App.class
 models/Decision.class
 util/DatabaseConfiguration.class
+models/BesoinCompetence.class
+models/Competence.class
+models/Candidature.class
 models/Utilisateur.class
 models/Enseignant.class
