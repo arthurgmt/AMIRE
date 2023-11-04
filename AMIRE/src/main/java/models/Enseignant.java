@@ -41,14 +41,29 @@ public class Enseignant {
     @Column(name = "AutresInformations", columnDefinition="TEXT")
     private String AutresInformations;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "UtilisateurID", insertable = false, updatable = false)
     private Utilisateur utilisateur;
 
 
-    public Enseignant(int ID, Utilisateur utilisateur, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations) {
+    public Enseignant(int ID, int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations,  Utilisateur utilisateur) {
         this.ID = ID;
+        this.UtilisateurID = UtilisateurID;
+        this.Experience = Experience;
+        this.Telephone = Telephone;
+        this.SiteWeb = SiteWeb;
+        this.NiveauxSouhaites = NiveauxSouhaites;
+        this.Disponibilites = Disponibilites;
+        this.TypeContrat = TypeContrat;
+        this.TitresAcademiques = TitresAcademiques;
+        this.Evaluations = Evaluations;
+        this.AutresInformations = AutresInformations;
         this.utilisateur = utilisateur;
+    }
+
+    public Enseignant(int ID, int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations) {
+        this.ID = ID;
+        this.UtilisateurID = UtilisateurID;
         this.Experience = Experience;
         this.Telephone = Telephone;
         this.SiteWeb = SiteWeb;
@@ -61,6 +76,14 @@ public class Enseignant {
     }
 
     public Enseignant() {
+    }
+
+    public int getID() {
+        return this.ID;
+    }
+
+    public int getUtilisateurID() {
+        return this.UtilisateurID;
     }
 
     public int getExperience() {

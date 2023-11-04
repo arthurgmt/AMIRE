@@ -1,6 +1,6 @@
 package controllers;
 
-import dao.UtilisateurDAO;
+import dao.*;
 import models.Utilisateur;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -60,10 +60,17 @@ public class UtilisateurServlet extends HttpServlet {
         utilisateur.setRole(role);
 
         utilisateurDAO.addUser(utilisateur);
-        response.sendRedirect("users.jsp");
+
+        if (role.equals("Enseignant")) {
+            response.sendRedirect("/enseignant/enseignant.jsp"); 
+        } else if (role.equals("Ecole")) {
+            response.sendRedirect("/ecole/ecole.jsp"); 
+        } else {
+            response.sendRedirect("/index.jsp"); 
+        }
     }
 
-    private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private Utilisateur updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
@@ -73,6 +80,8 @@ public class UtilisateurServlet extends HttpServlet {
 
         Utilisateur utilisateur = new Utilisateur(id, nom, prenom, mail, motDePasse, role);
         utilisateurDAO.updateUser(utilisateur);
+
+        return utilisateur;
         // response.sendRedirect("users.jsp");
     }
 
