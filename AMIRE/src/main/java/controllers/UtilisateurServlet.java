@@ -20,7 +20,7 @@ public class UtilisateurServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         switch (action) {
-            case "create":
+            case "register":
                 createUser(request, response);
                 break;
             case "update":
@@ -73,13 +73,13 @@ public class UtilisateurServlet extends HttpServlet {
 
         Utilisateur utilisateur = new Utilisateur(id, nom, prenom, mail, motDePasse, role);
         utilisateurDAO.updateUser(utilisateur);
-        response.sendRedirect("users.jsp");
+        // response.sendRedirect("users.jsp");
     }
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         utilisateurDAO.deleteUser(id);
-        response.sendRedirect("users.jsp");
+        // response.sendRedirect("users.jsp");
     }
 
     private void getUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

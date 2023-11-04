@@ -1,5 +1,5 @@
-CREATE DATABASE Amire;
-USE Amire;
+-- CREATE DATABASE Amire;
+-- USE Amire;
 CREATE TABLE Utilisateur(
     ID INT PRIMARY KEY,
     Nom VARCHAR(255) NOT NULL ,

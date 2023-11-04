@@ -19,7 +19,7 @@
     
     <label for="role">Role:</label>
     <select id="role" name="role">
-        <option value="Student" ${user.role == 'Student' ? 'selected' : ''}>Student</option>
+        <option value="Recruteur" ${user.role == 'Recruteur' ? 'selected' : ''}>Student</option>
         <option value="Teacher" ${user.role == 'Teacher' ? 'selected' : ''}>Teacher</option>
         <option value="Admin" ${user.role == 'Admin' ? 'selected' : ''}>Admin</option>
     </select>
