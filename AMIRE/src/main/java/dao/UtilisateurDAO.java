@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import models.Utilisateur;
@@ -31,6 +32,31 @@ public class UtilisateurDAO {
             e.printStackTrace();
         }
         return utilisateurs;
+    }
+
+    public Utilisateur getUserById(int id) {
+        Utilisateur utilisateur = null;
+        String sql = "SELECT * FROM Utilisateur WHERE ID = ?";
+
+        try (Connection conn = DatabaseConfiguration.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                utilisateur = new Utilisateur();
+                utilisateur.setID(rs.getInt("ID"));
+                utilisateur.setNom(rs.getString("Nom"));
+                utilisateur.setPrenom(rs.getString("Prenom"));
+                utilisateur.setMail(rs.getString("Mail"));
+                utilisateur.setMotDePasse(rs.getString("MotDePasse"));
+                utilisateur.setRole(rs.getString("Role"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return utilisateur;
     }
 
     public void addUser(Utilisateur utilisateur) {
@@ -105,6 +131,4 @@ public class UtilisateurDAO {
         }
         return null;
     }
-
-    // Pour le logout, généralement c'est géré au niveau de la session de l'application, pas au niveau du DAO
 }
