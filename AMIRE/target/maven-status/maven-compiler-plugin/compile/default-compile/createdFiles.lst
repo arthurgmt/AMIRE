@@ -10,4 +10,5 @@ dao/UtilisateurDAO.class
 util/DatabaseConfiguration.class
 models/Competence.class
 models/Candidature.class
+controllers/EcoleServlet.class
 models/Utilisateur.class
