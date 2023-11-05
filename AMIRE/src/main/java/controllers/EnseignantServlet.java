@@ -130,7 +130,7 @@ public class EnseignantServlet extends HttpServlet {
             );
     
             enseignantDAO.updateEnseignant(enseignantToUpdate);
-            response.sendRedirect("enseignants.jsp"); // Rediriger vers la liste des enseignants
+            response.sendRedirect("enseignants.jsp");
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Erreur lors de la mise à jour de l'enseignant.");

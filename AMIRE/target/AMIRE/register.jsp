@@ -21,7 +21,7 @@
     
     <label for="role">Role:</label>
     <select id="role" name="role">
-        <option value="Recruteur">Student</option>
+        <option value="Recruteur">Recruteur</option>
         <option value="Teacher">Teacher</option>
         <option value="Admin">Admin</option>
     </select>
