@@ -9,7 +9,7 @@ import java.util.List;
 
 public class EnseignantDAO {
 
-    public List<Enseignant> getAllEnseignants() {
+    /*public List<Enseignant> getAllEnseignants() {
         List<Enseignant> enseignants = new ArrayList<>();
         String sql = "SELECT * FROM Enseignant";
         try (Connection conn = DatabaseConfiguration.getConnection();
@@ -120,5 +120,5 @@ public class EnseignantDAO {
         String competences = (rs.getString("Competences"));
         Enseignant enseignant = new Enseignant(ID, utilisateurID, experience, telephone, siteweb, niveau, disponibilite, typecontrat, titreacademique, evalutations, autres, competences);
         return enseignant;
-    }
+    }*/
 }

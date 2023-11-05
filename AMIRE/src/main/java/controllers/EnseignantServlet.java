@@ -2,14 +2,17 @@ package controllers;
 
 import dao.EnseignantDAO;
 import models.Enseignant;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.sql.Date;
 
-@WebServlet("/enseignant")
+/*@WebServlet("/enseignant")
 public class EnseignantServlet extends HttpServlet {
 
     private EnseignantDAO enseignantDAO;
@@ -165,4 +168,4 @@ public class EnseignantServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/enseignant-list.jsp");
         dispatcher.forward(request, response);
     }
-}
+}*/

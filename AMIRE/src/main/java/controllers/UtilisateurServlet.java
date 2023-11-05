@@ -1,6 +1,7 @@
 package controllers;
 
 import dao.UtilisateurDAO;
+import jakarta.inject.Inject;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,11 +15,11 @@ import java.io.IOException;
 @WebServlet("/utilisateur")
 public class UtilisateurServlet extends HttpServlet {
 
+    @Inject
     private UtilisateurDAO utilisateurDAO;
 
     @Override
     public void init() {
-        utilisateurDAO = new UtilisateurDAO();
     }
 
     @Override
