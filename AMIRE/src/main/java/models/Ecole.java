@@ -10,6 +10,9 @@ public class Ecole {
     @Column(name = "ID", nullable = false)
     private int ID;
 
+    @Column(name = "UtilisateurID", nullable = false)
+    private int UtilisateurID;
+
     @Column(name = "RaisonSociale", nullable = false)
     private String RaisonSociale;
 
