@@ -1,7 +1,7 @@
-CREATE DATABASE Amire;
-USE Amire;
+-- CREATE DATABASE Amire;
+-- USE Amire;
 CREATE TABLE Utilisateur(
-    ID INT PRIMARY KEY,
+    ID SERIAL PRIMARY KEY,
     Nom VARCHAR(255) NOT NULL ,
     Prenom VARCHAR(255) NOT NULL,
     Mail VARCHAR(255) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE Utilisateur(
     Role VARCHAR(50)  NOT NULL
 );
 CREATE TABLE Enseignant (
-    ID INT PRIMARY KEY,
+    ID SERIAL PRIMARY KEY,
     UtilisateurID INT NOT NULL,
     Experience INT,
     Telephone VARCHAR(20) NOT NULL,
@@ -23,7 +23,8 @@ CREATE TABLE Enseignant (
     FOREIGN KEY (UtilisateurID) REFERENCES Utilisateur(ID)
 );
 CREATE TABLE Ecole (
-    ID INT PRIMARY KEY,
+    ID SERIAL PRIMARY KEY,
+    UtilisateurID INT NOT NULL,
     RaisonSociale VARCHAR(255) NOT NULL,
     Adresse TEXT NOT NULL,
     SiteWeb VARCHAR(255),
@@ -44,13 +45,13 @@ CREATE TABLE Decision (
     Commentaires TEXT
 );
 CREATE TABLE Candidature (
-     ID INT AUTO_INCREMENT PRIMARY KEY,
-     EnseignantID INT NOT NULL,
-     BesoinID INT NOT NULL,
-     DecisionID INT NOT NULL,
-     FOREIGN KEY (EnseignantID) REFERENCES Enseignant(ID),
-     FOREIGN KEY (BesoinID) REFERENCES Besoin(ID),
-     FOREIGN KEY (DecisionID) REFERENCES Decision(ID)
+    ID SERIAL PRIMARY KEY,
+    EnseignantID INT NOT NULL,
+    BesoinID INT NOT NULL,
+    DecisionID INT NOT NULL,
+    FOREIGN KEY (EnseignantID) REFERENCES Enseignant(ID),
+    FOREIGN KEY (BesoinID) REFERENCES Besoin(ID),
+    FOREIGN KEY (DecisionID) REFERENCES Decision(ID)
 );
 CREATE TABLE Competence (
     ID INT PRIMARY KEY,

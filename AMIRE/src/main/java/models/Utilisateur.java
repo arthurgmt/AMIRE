@@ -1,12 +1,35 @@
 package models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+// import javax.persistence.ManyToOne;
+// import javax.persistence.JoinColumn;
 
+@Entity
+@Table(name = "Utilisateur")
 public class Utilisateur {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
+
+    @Column(name = "Nom", nullable = false)
     private String Nom;
+
+    @Column(name = "Prenom", nullable = false)
     private String Prenom;
+
+    @Column(name = "Mail", nullable = false)
     private String Mail;
+
+    @Column(name = "MotDePasse", nullable = false)
     private String MotDePasse;
+
+    @Column(name = "Role", nullable = false)
     private String Role;
 
     public Utilisateur(int ID, String Nom, String Prenom, String Mail, String MotDePasse, String Role) {
