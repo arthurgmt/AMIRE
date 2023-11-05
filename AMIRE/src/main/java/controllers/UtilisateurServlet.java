@@ -16,8 +16,13 @@ public class UtilisateurServlet extends HttpServlet {
         utilisateurDAO = new UtilisateurDAO();
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        if (action == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action not specified");
+            return;
+        }
 
         switch (action) {
             case "register":
@@ -29,11 +34,19 @@ public class UtilisateurServlet extends HttpServlet {
             case "login":
                 login(request, response);
                 break;
+            default:
+                response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED, "Action not handled");
+                break;
         }
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        if (action == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action not specified");
+            return;
+        }
 
         switch (action) {
             case "delete":
@@ -41,6 +54,9 @@ public class UtilisateurServlet extends HttpServlet {
                 break;
             case "get":
                 getUser(request, response);
+                break;
+            default:
+                response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED, "Action not handled");
                 break;
         }
     }
