@@ -1,6 +1,7 @@
 models/Besoin.class
 models/EnseignantCompetence.class
 models/Ecole.class
+controllers/EnseignantServlet.class
 App.class
 controllers/UtilisateurServlet.class
 models/Decision.class
