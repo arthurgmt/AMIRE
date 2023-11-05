@@ -8,7 +8,7 @@ import java.util.Date;
 public class Enseignant {
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID")
     private int ID;
 
     @Column(name = "UtilisateurID", nullable = false)
@@ -46,8 +46,7 @@ public class Enseignant {
     private Utilisateur utilisateur;
 
 
-    public Enseignant(int ID, int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations,  Utilisateur utilisateur) {
-        this.ID = ID;
+    public Enseignant(int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations,  Utilisateur utilisateur) {
         this.UtilisateurID = UtilisateurID;
         this.Experience = Experience;
         this.Telephone = Telephone;
@@ -63,6 +62,19 @@ public class Enseignant {
 
     public Enseignant(int ID, int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations) {
         this.ID = ID;
+        this.UtilisateurID = UtilisateurID;
+        this.Experience = Experience;
+        this.Telephone = Telephone;
+        this.SiteWeb = SiteWeb;
+        this.NiveauxSouhaites = NiveauxSouhaites;
+        this.Disponibilites = Disponibilites;
+        this.TypeContrat = TypeContrat;
+        this.TitresAcademiques = TitresAcademiques;
+        this.Evaluations = Evaluations;
+        this.AutresInformations = AutresInformations;
+    }
+
+    public Enseignant(int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations) {
         this.UtilisateurID = UtilisateurID;
         this.Experience = Experience;
         this.Telephone = Telephone;

@@ -6,6 +6,8 @@ controllers/UtilisateurServlet.class
 models/Decision.class
 models/BesoinCompetence.class
 models/Enseignant.class
+dao/EnseignantDAO.class
+dao/EcoleDAO.class
 dao/UtilisateurDAO.class
 util/DatabaseConfiguration.class
 models/Competence.class
