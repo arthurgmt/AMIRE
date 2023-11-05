@@ -12,8 +12,8 @@
     
     <label for="pwd">Password:</label>
     <input type="password" id="pwd" name="motDePasse" required>
-    
-    <input type="hidden" name="action" value="login">
+
+    <input type="hidden" name="action" value="register">
     <input type="submit" value="Login">
 </form>
 <p>Not registered? <a href="register.jsp">Create an account</a></p>

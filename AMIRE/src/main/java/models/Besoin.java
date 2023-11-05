@@ -1,6 +1,7 @@
 package models;
 
-import javax.persistence.*;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Besoin")
@@ -25,14 +26,6 @@ public class Besoin {
     @ManyToOne
     @JoinColumn(name = "EcoleID", insertable = false, updatable = false)
     private Ecole ecole;
-    
-    public Besoin(int ID, Ecole ecole, String Periode, String Remarques, String Exigences) {
-        this.ID = ID;
-        this.ecole = ecole;
-        this.Periode = Periode;
-        this.Remarques = Remarques;
-        this.Competences = Exigences;
-    }
 
     public int getID() {
         return this.ID;

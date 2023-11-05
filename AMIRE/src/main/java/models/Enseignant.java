@@ -1,6 +1,6 @@
 package models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -8,7 +8,7 @@ import java.util.Date;
 public class Enseignant {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     private int ID;
 
     @Column(name = "UtilisateurID", nullable = false)
@@ -47,62 +47,6 @@ public class Enseignant {
     @OneToOne
     @JoinColumn(name = "UtilisateurID", insertable = false, updatable = false)
     private Utilisateur utilisateur;
-
-
-    public Enseignant(int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations,  Utilisateur utilisateur, String Competences) {
-        this.UtilisateurID = UtilisateurID;
-        this.Experience = Experience;
-        this.Telephone = Telephone;
-        this.SiteWeb = SiteWeb;
-        this.NiveauxSouhaites = NiveauxSouhaites;
-        this.Disponibilites = Disponibilites;
-        this.TypeContrat = TypeContrat;
-        this.TitresAcademiques = TitresAcademiques;
-        this.Evaluations = Evaluations;
-        this.AutresInformations = AutresInformations;
-        this.utilisateur = utilisateur;
-        this.Competences = Competences;
-    }
-
-    public Enseignant(int ID, int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations, String Competences) {
-        this.ID = ID;
-        this.UtilisateurID = UtilisateurID;
-        this.Experience = Experience;
-        this.Telephone = Telephone;
-        this.SiteWeb = SiteWeb;
-        this.NiveauxSouhaites = NiveauxSouhaites;
-        this.Disponibilites = Disponibilites;
-        this.TypeContrat = TypeContrat;
-        this.TitresAcademiques = TitresAcademiques;
-        this.Evaluations = Evaluations;
-        this.AutresInformations = AutresInformations;
-        this.Competences = Competences;
-    }
-
-    public Enseignant(int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations, String Competences) {
-        this.UtilisateurID = UtilisateurID;
-        this.Experience = Experience;
-        this.Telephone = Telephone;
-        this.SiteWeb = SiteWeb;
-        this.NiveauxSouhaites = NiveauxSouhaites;
-        this.Disponibilites = Disponibilites;
-        this.TypeContrat = TypeContrat;
-        this.TitresAcademiques = TitresAcademiques;
-        this.Evaluations = Evaluations;
-        this.AutresInformations = AutresInformations;
-        this.Competences = Competences;
-    }
-
-    public Enseignant() {
-    }
-
-    public int getID() {
-        return this.ID;
-    }
-
-    public int getUtilisateurID() {
-        return this.UtilisateurID;
-    }
 
     public int getExperience() {
         return this.Experience;

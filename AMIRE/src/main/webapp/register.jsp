@@ -21,13 +21,13 @@
     
     <label for="role">Role:</label>
     <select id="role" name="role">
-        <option value="Recruteur">Recruteur</option>
+        <option value="Recruteur">Student</option>
         <option value="Teacher">Teacher</option>
         <option value="Admin">Admin</option>
     </select>
-    
     <input type="hidden" name="action" value="register">
-    <input type="submit" value="Register">
+    <button type="submit">S'inscrire</button>
+
 </form>
 <p>Already registered? <a href="login.jsp">Sign in</a></p>
 </body>

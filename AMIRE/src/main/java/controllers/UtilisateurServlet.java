@@ -1,10 +1,14 @@
 package controllers;
 
-import dao.*;
+import dao.UtilisateurDAO;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import models.Utilisateur;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+
 import java.io.IOException;
 
 @WebServlet("/utilisateur")
@@ -12,17 +16,15 @@ public class UtilisateurServlet extends HttpServlet {
 
     private UtilisateurDAO utilisateurDAO;
 
+    @Override
     public void init() {
         utilisateurDAO = new UtilisateurDAO();
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println(request.getParameterMap());
         String action = request.getParameter("action");
-        if (action == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action not specified");
-            return;
-        }
 
         switch (action) {
             case "register":
@@ -34,19 +36,11 @@ public class UtilisateurServlet extends HttpServlet {
             case "login":
                 login(request, response);
                 break;
-            default:
-                response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED, "Action not handled");
-                break;
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (action == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action not specified");
-            return;
-        }
 
         switch (action) {
             case "delete":
@@ -55,11 +49,8 @@ public class UtilisateurServlet extends HttpServlet {
             case "get":
                 getUser(request, response);
                 break;
-            default:
-                response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED, "Action not handled");
-                break;
         }
-    }
+    }*/
 
     private void createUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nom = request.getParameter("nom");
@@ -76,17 +67,11 @@ public class UtilisateurServlet extends HttpServlet {
         utilisateur.setRole(role);
 
         utilisateurDAO.addUser(utilisateur);
-
-        if (role.equals("Enseignant")) {
-            response.sendRedirect("/enseignant/enseignant.jsp"); 
-        } else if (role.equals("Ecole")) {
-            response.sendRedirect("/ecole/ecole.jsp"); 
-        } else {
-            response.sendRedirect("/index.jsp"); 
-        }
+        // TODO : redirect to login page
+        response.sendRedirect("index.jsp");
     }
 
-    private Utilisateur updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
@@ -94,10 +79,16 @@ public class UtilisateurServlet extends HttpServlet {
         String motDePasse = request.getParameter("motDePasse");
         String role = request.getParameter("role");
 
-        Utilisateur utilisateur = new Utilisateur(id, nom, prenom, mail, motDePasse, role);
-        utilisateurDAO.updateUser(utilisateur);
+        Utilisateur utilisateur = new Utilisateur();
+        // id, nom, prenom, mail, motDePasse, role
+        utilisateur.setID(id);
+        utilisateur.setNom(nom);
+        utilisateur.setPrenom(prenom);
+        utilisateur.setMail(mail);
+        utilisateur.setMotDePasse(motDePasse);
+        utilisateur.setRole(role);
 
-        return utilisateur;
+        utilisateurDAO.updateUser(utilisateur);
         // response.sendRedirect("users.jsp");
     }
 

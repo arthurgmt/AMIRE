@@ -1,6 +1,7 @@
 package models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "Candidature")
@@ -31,16 +32,6 @@ public class Candidature {
     @ManyToOne
     @JoinColumn(name = "DecisionID", insertable = false, updatable = false)
     private Decision decision;
-    
-    public Candidature(int ID, Enseignant enseignant, Besoin besoin, Decision decision) {
-        this.ID = ID;
-        this.enseignant = enseignant;
-        this.besoin = besoin;
-        this.decision = decision;
-    }
-
-    public Candidature() {
-    }
 
     public int getID() {
         return this.ID;
