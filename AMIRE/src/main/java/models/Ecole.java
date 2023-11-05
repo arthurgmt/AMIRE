@@ -26,8 +26,8 @@ public class Ecole {
     private String Contact;
 
 
-    public Ecole(int ID, String RaisonSociale, String Adresse, String SiteWeb, String Contact) {
-        this.ID = ID;
+    public Ecole(int UtilisateurID, String RaisonSociale, String Adresse, String SiteWeb, String Contact) {
+        this.UtilisateurID = UtilisateurID;
         this.RaisonSociale = RaisonSociale;
         this.Adresse = Adresse;
         this.SiteWeb = SiteWeb;
@@ -43,6 +43,14 @@ public class Ecole {
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public int getUtilisateurID() {
+        return this.UtilisateurID;
+    }
+
+    public void setUtilisateurID(int UtilisateurID) {
+        this.UtilisateurID = UtilisateurID;
     }
 
     public String getRaisonSociale() {

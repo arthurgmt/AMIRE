@@ -19,6 +19,7 @@ public class EcoleDAO {
             while (rs.next()) {
                 Ecole ecole = new Ecole();
                 ecole.setID(rs.getInt("ID"));
+                ecole.setUtilisateurID(rs.getInt("UtilisateurID"));
                 ecole.setRaisonSociale(rs.getString("RaisonSociale"));
                 ecole.setAdresse(rs.getString("Adresse"));
                 ecole.setSiteWeb(rs.getString("SiteWeb"));
@@ -55,33 +56,33 @@ public class EcoleDAO {
     }
 
     public void addEcole(Ecole ecole) {
-        String sql = "INSERT INTO Ecole (ID, RaisonSociale, Adresse, SiteWeb, Contact) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Ecole (RaisonSociale, Adresse, SiteWeb, Contact) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConfiguration.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, ecole.getID());
-            stmt.setString(2, ecole.getRaisonSociale());
-            stmt.setString(3, ecole.getAdresse());
-            stmt.setString(4, ecole.getSiteWeb());
-            stmt.setString(5, ecole.getContact());
-
+    
+            stmt.setString(1, ecole.getRaisonSociale());
+            stmt.setString(2, ecole.getAdresse());
+            stmt.setString(3, ecole.getSiteWeb());
+            stmt.setString(4, ecole.getContact());
+    
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
+    
     public void updateEcole(Ecole ecole) {
-        String sql = "UPDATE Ecole SET RaisonSociale = ?, Adresse = ?, SiteWeb = ?, Contact = ? WHERE ID = ?";
+        String sql = "UPDATE Ecole SET UtilisateurID = ?, RaisonSociale = ?, Adresse = ?, SiteWeb = ?, Contact = ? WHERE ID = ?";
         try (Connection conn = DatabaseConfiguration.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, ecole.getRaisonSociale());
-            stmt.setString(2, ecole.getAdresse());
-            stmt.setString(3, ecole.getSiteWeb());
-            stmt.setString(4, ecole.getContact());
-            stmt.setInt(5, ecole.getID());
-
+    
+            stmt.setInt(1, ecole.getUtilisateurID()); 
+            stmt.setString(2, ecole.getRaisonSociale());
+            stmt.setString(3, ecole.getAdresse());
+            stmt.setString(4, ecole.getSiteWeb());
+            stmt.setString(5, ecole.getContact());
+            stmt.setInt(6, ecole.getID());
+    
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
