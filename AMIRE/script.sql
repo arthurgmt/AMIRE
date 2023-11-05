@@ -24,6 +24,7 @@ CREATE TABLE Enseignant (
 );
 CREATE TABLE Ecole (
     ID SERIAL PRIMARY KEY,
+    UtilisateurID INT NOT NULL,
     RaisonSociale VARCHAR(255) NOT NULL,
     Adresse TEXT NOT NULL,
     SiteWeb VARCHAR(255),
