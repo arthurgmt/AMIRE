@@ -78,6 +78,7 @@ public class EnseignantServlet extends HttpServlet {
             String titresAcademiques = request.getParameter("titresAcademiques");
             String evaluations = request.getParameter("evaluations");
             String autresInformations = request.getParameter("autresInformations");
+            String competences = request.getParameter("competences");
     
             Enseignant newEnseignant = new Enseignant(
                     utilisateurID,
@@ -89,7 +90,8 @@ public class EnseignantServlet extends HttpServlet {
                     typeContrat,
                     titresAcademiques,
                     evaluations,
-                    autresInformations
+                    autresInformations,
+                    competences
             );
     
             enseignantDAO.addEnseignant(newEnseignant);
@@ -114,6 +116,7 @@ public class EnseignantServlet extends HttpServlet {
             String titresAcademiques = request.getParameter("titresAcademiques");
             String evaluations = request.getParameter("evaluations");
             String autresInformations = request.getParameter("autresInformations");
+            String competences = request.getParameter("competences");
     
             Enseignant enseignantToUpdate = new Enseignant(
                     id,
@@ -126,7 +129,8 @@ public class EnseignantServlet extends HttpServlet {
                     typeContrat,
                     titresAcademiques,
                     evaluations,
-                    autresInformations
+                    autresInformations,
+                    competences
             );
     
             enseignantDAO.updateEnseignant(enseignantToUpdate);

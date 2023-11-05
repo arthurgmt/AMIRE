@@ -20,6 +20,7 @@ CREATE TABLE Enseignant (
     TitresAcademiques TEXT,
     Evaluations TEXT,
     AutresInformations TEXT,
+    Competences TEXT NOT NULL,
     FOREIGN KEY (UtilisateurID) REFERENCES Utilisateur(ID)
 );
 CREATE TABLE Ecole (
@@ -31,15 +32,15 @@ CREATE TABLE Ecole (
     Contact VARCHAR(255)
 );
 CREATE TABLE Besoin (
-    ID INT PRIMARY KEY,
+    ID SERIAL PRIMARY KEY,
     EcoleID INT NOT NULL,
     Periode VARCHAR(255) NOT NULL,
     Remarques TEXT,
-    Exigences TEXT NOT NULL,
+    Competences TEXT NOT NULL,
     FOREIGN KEY (EcoleID) REFERENCES Ecole(ID)
 );
 CREATE TABLE Decision (
-    ID INT PRIMARY KEY,
+    ID SERIAL PRIMARY KEY,
     Statut VARCHAR(50) NOT NULL,
     DateDecision DATE NOT NULL,
     Commentaires TEXT
@@ -48,26 +49,8 @@ CREATE TABLE Candidature (
     ID SERIAL PRIMARY KEY,
     EnseignantID INT NOT NULL,
     BesoinID INT NOT NULL,
-    DecisionID INT NOT NULL,
+    DecisionID INT,
     FOREIGN KEY (EnseignantID) REFERENCES Enseignant(ID),
     FOREIGN KEY (BesoinID) REFERENCES Besoin(ID),
     FOREIGN KEY (DecisionID) REFERENCES Decision(ID)
-);
-CREATE TABLE Competence (
-    ID INT PRIMARY KEY,
-    NomCompetence VARCHAR(255) NOT NULL
-);
-CREATE TABLE BesoinCompetence (
-    BesoinID INT NOT NULL,
-    CompetenceID INT NOT NULL,
-    PRIMARY KEY (BesoinID, CompetenceID),
-    FOREIGN KEY (BesoinID) REFERENCES Besoin(ID),
-    FOREIGN KEY (CompetenceID) REFERENCES Competence(ID)
-);
-CREATE TABLE EnseignantCompetence (
-    EnseignantID INT NOT NULL,
-    CompetenceID INT NOT NULL,
-    PRIMARY KEY (EnseignantID, CompetenceID),
-    FOREIGN KEY (EnseignantID) REFERENCES Enseignant(ID),
-    FOREIGN KEY (CompetenceID) REFERENCES Competence(ID)
 );

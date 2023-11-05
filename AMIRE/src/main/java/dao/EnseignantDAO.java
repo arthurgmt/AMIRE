@@ -46,7 +46,7 @@ public class EnseignantDAO {
     }
 
     public void addEnseignant(Enseignant enseignant) {
-        String sql = "INSERT INTO Enseignant(ID, UtilisateurID, Experience, Telephone, SiteWeb, NiveauxSouhaites, Disponibilites, TypeContrat, TitresAcademiques, Evaluations, AutresInformations) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Enseignant(ID, UtilisateurID, Experience, Telephone, SiteWeb, NiveauxSouhaites, Disponibilites, TypeContrat, TitresAcademiques, Evaluations, AutresInformations, Competences) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConfiguration.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -61,6 +61,7 @@ public class EnseignantDAO {
             stmt.setString(9, enseignant.getTitresAcademiques());
             stmt.setString(10, enseignant.getEvaluations());
             stmt.setString(11, enseignant.getAutresInformations());
+            stmt.setString(12, enseignant.getCompetences());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -69,7 +70,7 @@ public class EnseignantDAO {
     }
 
     public void updateEnseignant(Enseignant enseignant) {
-        String sql = "UPDATE Enseignant SET UtilisateurID=?, Experience=?, Telephone=?, SiteWeb=?, NiveauxSouhaites=?, Disponibilites=?, TypeContrat=?, TitresAcademiques=?, Evaluations=?, AutresInformations=? WHERE ID=?";
+        String sql = "UPDATE Enseignant SET UtilisateurID=?, Experience=?, Telephone=?, SiteWeb=?, NiveauxSouhaites=?, Disponibilites=?, TypeContrat=?, TitresAcademiques=?, Evaluations=?, AutresInformations=?, Competences=? WHERE ID=?";
         try (Connection conn = DatabaseConfiguration.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -83,7 +84,8 @@ public class EnseignantDAO {
             stmt.setString(8, enseignant.getTitresAcademiques());
             stmt.setString(9, enseignant.getEvaluations());
             stmt.setString(10, enseignant.getAutresInformations());
-            stmt.setInt(11, enseignant.getID());
+            stmt.setString(11, enseignant.getCompetences());
+            stmt.setInt(12, enseignant.getID());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -115,7 +117,8 @@ public class EnseignantDAO {
         String titreacademique = (rs.getString("TitresAcademiques"));
         String evalutations = (rs.getString("Evaluations"));
         String autres = (rs.getString("AutresInformations"));
-        Enseignant enseignant = new Enseignant(ID, utilisateurID, experience, telephone, siteweb, niveau, disponibilite, typecontrat, titreacademique, evalutations, autres);
+        String competences = (rs.getString("Competences"));
+        Enseignant enseignant = new Enseignant(ID, utilisateurID, experience, telephone, siteweb, niveau, disponibilite, typecontrat, titreacademique, evalutations, autres, competences);
         return enseignant;
     }
 }

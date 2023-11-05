@@ -19,8 +19,8 @@ public class Besoin {
     @Column(name = "Remarques", columnDefinition="TEXT")
     private String Remarques;
 
-    @Column(name = "Exigences", nullable = false, columnDefinition="TEXT")
-    private String Exigences;
+    @Column(name = "Competences", nullable = false, columnDefinition="TEXT")
+    private String Competences;
 
     @ManyToOne
     @JoinColumn(name = "EcoleID", insertable = false, updatable = false)
@@ -31,7 +31,7 @@ public class Besoin {
         this.ecole = ecole;
         this.Periode = Periode;
         this.Remarques = Remarques;
-        this.Exigences = Exigences;
+        this.Competences = Exigences;
     }
 
     public int getID() {
@@ -58,12 +58,12 @@ public class Besoin {
         this.Remarques = Remarques;
     }
 
-    public String getExigences() {
-        return this.Exigences;
+    public String getCompetences() {
+        return this.Competences;
     }
 
-    public void setExigences(String Exigences) {
-        this.Exigences = Exigences;
+    public void setCompetences(String Competences) {
+        this.Competences = Competences;
     }
 
     public Ecole getEcole() {

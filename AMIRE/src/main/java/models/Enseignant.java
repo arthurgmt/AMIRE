@@ -41,12 +41,15 @@ public class Enseignant {
     @Column(name = "AutresInformations", columnDefinition="TEXT")
     private String AutresInformations;
 
+    @Column(name = "Competences", columnDefinition = "TEXT", nullable = false)
+    private String Competences;
+
     @OneToOne
     @JoinColumn(name = "UtilisateurID", insertable = false, updatable = false)
     private Utilisateur utilisateur;
 
 
-    public Enseignant(int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations,  Utilisateur utilisateur) {
+    public Enseignant(int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations,  Utilisateur utilisateur, String Competences) {
         this.UtilisateurID = UtilisateurID;
         this.Experience = Experience;
         this.Telephone = Telephone;
@@ -58,9 +61,10 @@ public class Enseignant {
         this.Evaluations = Evaluations;
         this.AutresInformations = AutresInformations;
         this.utilisateur = utilisateur;
+        this.Competences = Competences;
     }
 
-    public Enseignant(int ID, int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations) {
+    public Enseignant(int ID, int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations, String Competences) {
         this.ID = ID;
         this.UtilisateurID = UtilisateurID;
         this.Experience = Experience;
@@ -72,9 +76,10 @@ public class Enseignant {
         this.TitresAcademiques = TitresAcademiques;
         this.Evaluations = Evaluations;
         this.AutresInformations = AutresInformations;
+        this.Competences = Competences;
     }
 
-    public Enseignant(int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations) {
+    public Enseignant(int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations, String Competences) {
         this.UtilisateurID = UtilisateurID;
         this.Experience = Experience;
         this.Telephone = Telephone;
@@ -85,6 +90,7 @@ public class Enseignant {
         this.TitresAcademiques = TitresAcademiques;
         this.Evaluations = Evaluations;
         this.AutresInformations = AutresInformations;
+        this.Competences = Competences;
     }
 
     public Enseignant() {
@@ -170,4 +176,11 @@ public class Enseignant {
         this.AutresInformations = AutresInformations;
     }
 
+    public String getCompetences() {
+        return Competences;
+    }
+
+    public void setCompetences(String competences) {
+        Competences = competences;
+    }
 }
