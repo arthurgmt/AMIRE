@@ -1,6 +1,6 @@
 package models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -17,14 +17,6 @@ public class Competence {
     @ManyToMany(mappedBy = "competences")
     private Set<Enseignant> enseignants;
     
-    public Competence(int ID, String NomCompetence) {
-        this.ID = ID;
-        this.NomCompetence = NomCompetence;
-    }
-
-    public Competence() {
-    }
-
     public int getID() {
         return this.ID;
     }

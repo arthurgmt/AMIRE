@@ -1,6 +1,6 @@
 package models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -19,16 +19,6 @@ public class Decision {
 
     @Column(name = "Commentaires", columnDefinition="TEXT")
     private String Commentaires;
-
-    public Decision(int ID, String Statut, Date DateDecision, String Commentaires) {
-        this.ID = ID;
-        this.Statut = Statut;
-        this.DateDecision = DateDecision;
-        this.Commentaires = Commentaires;
-    }
-
-    public Decision() {
-    }
 
     public int getID() {
         return this.ID;

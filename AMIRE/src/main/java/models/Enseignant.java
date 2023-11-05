@@ -1,6 +1,6 @@
 package models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -44,24 +44,6 @@ public class Enseignant {
     @ManyToOne
     @JoinColumn(name = "UtilisateurID", insertable = false, updatable = false)
     private Utilisateur utilisateur;
-
-
-    public Enseignant(int ID, Utilisateur utilisateur, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations) {
-        this.ID = ID;
-        this.utilisateur = utilisateur;
-        this.Experience = Experience;
-        this.Telephone = Telephone;
-        this.SiteWeb = SiteWeb;
-        this.NiveauxSouhaites = NiveauxSouhaites;
-        this.Disponibilites = Disponibilites;
-        this.TypeContrat = TypeContrat;
-        this.TitresAcademiques = TitresAcademiques;
-        this.Evaluations = Evaluations;
-        this.AutresInformations = AutresInformations;
-    }
-
-    public Enseignant() {
-    }
 
     public int getExperience() {
         return this.Experience;

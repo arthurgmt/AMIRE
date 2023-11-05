@@ -1,6 +1,6 @@
 package models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "EnseignantCompetence")
@@ -20,14 +20,6 @@ public class EnseignantCompetence {
     @ManyToOne
     @JoinColumn(name = "CompetenceID", insertable = false, updatable = false)
     private Competence competence;
-
-    public EnseignantCompetence(Enseignant enseignant, Competence competence) {
-        this.enseignant = enseignant;
-        this.competence = competence;
-    }
-
-    public EnseignantCompetence() {
-    }
     
     public Enseignant getEnseignant() {
         return this.enseignant;

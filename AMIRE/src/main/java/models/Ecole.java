@@ -1,6 +1,6 @@
 package models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Ecole")
@@ -21,18 +21,6 @@ public class Ecole {
 
     @Column(name = "Contact")
     private String Contact;
-
-
-    public Ecole(int ID, String RaisonSociale, String Adresse, String SiteWeb, String Contact) {
-        this.ID = ID;
-        this.RaisonSociale = RaisonSociale;
-        this.Adresse = Adresse;
-        this.SiteWeb = SiteWeb;
-        this.Contact = Contact;
-    }
-
-    public Ecole() {
-    }
 
     public int getID() {
         return this.ID;

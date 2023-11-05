@@ -1,10 +1,14 @@
 package controllers;
 
 import dao.UtilisateurDAO;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import models.Utilisateur;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+
 import java.io.IOException;
 
 @WebServlet("/utilisateur")
@@ -12,11 +16,14 @@ public class UtilisateurServlet extends HttpServlet {
 
     private UtilisateurDAO utilisateurDAO;
 
+    @Override
     public void init() {
         utilisateurDAO = new UtilisateurDAO();
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println(request.getParameterMap());
         String action = request.getParameter("action");
 
         switch (action) {
@@ -32,7 +39,7 @@ public class UtilisateurServlet extends HttpServlet {
         }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
         switch (action) {
@@ -43,7 +50,7 @@ public class UtilisateurServlet extends HttpServlet {
                 getUser(request, response);
                 break;
         }
-    }
+    }*/
 
     private void createUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nom = request.getParameter("nom");
@@ -60,7 +67,8 @@ public class UtilisateurServlet extends HttpServlet {
         utilisateur.setRole(role);
 
         utilisateurDAO.addUser(utilisateur);
-        response.sendRedirect("users.jsp");
+        // TODO : redirect to login page
+        response.sendRedirect("index.jsp");
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -71,7 +79,15 @@ public class UtilisateurServlet extends HttpServlet {
         String motDePasse = request.getParameter("motDePasse");
         String role = request.getParameter("role");
 
-        Utilisateur utilisateur = new Utilisateur(id, nom, prenom, mail, motDePasse, role);
+        Utilisateur utilisateur = new Utilisateur();
+        // id, nom, prenom, mail, motDePasse, role
+        utilisateur.setID(id);
+        utilisateur.setNom(nom);
+        utilisateur.setPrenom(prenom);
+        utilisateur.setMail(mail);
+        utilisateur.setMotDePasse(motDePasse);
+        utilisateur.setRole(role);
+
         utilisateurDAO.updateUser(utilisateur);
         // response.sendRedirect("users.jsp");
     }

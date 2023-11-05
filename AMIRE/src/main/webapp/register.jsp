@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>Create New Account</h2>
-<form action="register" method="post">
+<form action="utilisateur" method="post">
     <label for="nom">Last Name:</label>
     <input type="text" id="nom" name="nom" required>
     
@@ -25,8 +25,9 @@
         <option value="Teacher">Teacher</option>
         <option value="Admin">Admin</option>
     </select>
-    
-    <input type="submit" value="Register">
+    <input type="hidden" name="action" value="register">
+    <button type="submit">S'inscrire</button>
+
 </form>
 <p>Already registered? <a href="login.jsp">Sign in</a></p>
 </body>
