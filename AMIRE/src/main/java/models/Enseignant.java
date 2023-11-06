@@ -41,7 +41,10 @@ public class Enseignant {
     @Column(name = "AutresInformations", columnDefinition="TEXT")
     private String AutresInformations;
 
-    @ManyToOne
+    @Column(name = "Competences", columnDefinition = "TEXT", nullable = false)
+    private String Competences;
+
+    @OneToOne
     @JoinColumn(name = "UtilisateurID", insertable = false, updatable = false)
     private Utilisateur utilisateur;
 
@@ -117,4 +120,11 @@ public class Enseignant {
         this.AutresInformations = AutresInformations;
     }
 
+    public String getCompetences() {
+        return Competences;
+    }
+
+    public void setCompetences(String competences) {
+        Competences = competences;
+    }
 }

@@ -1,8 +1,11 @@
 package dao;
 
+import beans.UtilisateurBean;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -10,57 +13,28 @@ import jakarta.persistence.PersistenceContext;
 import models.Utilisateur;
 
 import java.util.List;
-
-@Stateless
+@ApplicationScoped
 public class UtilisateurDAO {
-
-    protected EntityManagerFactory emf;
-    protected EntityManager em;
-
-    @PostConstruct
-    private void init() {
-        emf = Persistence.createEntityManagerFactory("default");
-        em = emf.createEntityManager();
-    }
-
-    @PreDestroy
-    private void destroy() {
-        if (em != null) {
-            em.close();
-        }
-        if (emf != null) {
-            emf.close();
-        }
-    }
-
-    public List<Utilisateur> getAllUtilisateurs() {
-        return em.createNamedQuery("Utilisateur.findAll", Utilisateur.class).getResultList();
-    }
-
-    public Utilisateur getUserById(int id) {
-
-        return em.find(Utilisateur.class, id);
-    }
+    @EJB
+    private UtilisateurBean utilisateurBean;
 
     public void addUser(Utilisateur utilisateur) {
-        em.getTransaction().begin();
-        em.persist(utilisateur);
-        em.getTransaction().commit();
+        utilisateurBean.addUser(utilisateur);
     }
-
     public void updateUser(Utilisateur utilisateur) {
-        em.merge(utilisateur);
-
+        utilisateurBean.updateUser(utilisateur);
     }
-
     public void deleteUser(int id) {
-        em.remove(getUserById(id));
+        utilisateurBean.deleteUser(id);
+    }
+    public Utilisateur login(String mail, String password) {
+        return utilisateurBean.login(mail, password);
+    }
+    public List<Utilisateur> getAllUtilisateurs() {
+        return utilisateurBean.getAllUtilisateurs();
+    }
+    public Utilisateur getUserById(int id) {
+        return utilisateurBean.getUserById(id);
     }
 
-    public Utilisateur login(String mail, String password) {
-        return em.createNamedQuery("Utilisateur.findByMailAndMotDePasse", Utilisateur.class)
-                .setParameter("Mail", mail)
-                .setParameter("MotDePasse", password)
-                .getSingleResult();
-    }
 }

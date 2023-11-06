@@ -10,6 +10,9 @@ public class Ecole {
     @Column(name = "ID", nullable = false)
     private int ID;
 
+    @Column(name = "UtilisateurID", nullable = false)
+    private int UtilisateurID;
+
     @Column(name = "RaisonSociale", nullable = false)
     private String RaisonSociale;
 
@@ -28,6 +31,14 @@ public class Ecole {
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public int getUtilisateurID() {
+        return this.UtilisateurID;
+    }
+
+    public void setUtilisateurID(int UtilisateurID) {
+        this.UtilisateurID = UtilisateurID;
     }
 
     public String getRaisonSociale() {
