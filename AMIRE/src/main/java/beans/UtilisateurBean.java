@@ -56,9 +56,13 @@ public class UtilisateurBean {
     }
 
     public Utilisateur login(String mail, String password) {
-        return em.createNamedQuery("Utilisateur.findByMailAndMotDePasse", Utilisateur.class)
-                .setParameter("Mail", mail)
-                .setParameter("MotDePasse", password)
-                .getSingleResult();
+        try {
+            return em.createNamedQuery("Utilisateur.findByMailAndMotDePasse", Utilisateur.class)
+                    .setParameter("Mail", mail)
+                    .setParameter("MotDePasse", password)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
