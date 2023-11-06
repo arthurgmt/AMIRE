@@ -29,6 +29,7 @@ CREATE TABLE Ecole (
     Adresse TEXT NOT NULL,
     SiteWeb VARCHAR(255),
     Contact VARCHAR(255)
+    FOREIGN KEY (UtilisateurID) REFERENCES Utilisateur(ID)
 );
 CREATE TABLE Besoin (
     ID INT PRIMARY KEY,
