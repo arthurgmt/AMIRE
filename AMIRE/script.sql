@@ -29,7 +29,8 @@ CREATE TABLE Ecole (
     RaisonSociale VARCHAR(255) NOT NULL,
     Adresse TEXT NOT NULL,
     SiteWeb VARCHAR(255),
-    Contact VARCHAR(255)
+    Contact VARCHAR(255),
+    FOREIGN KEY (UtilisateurID) REFERENCES Utilisateur(ID)
 );
 CREATE TABLE Besoin (
     ID SERIAL PRIMARY KEY,
