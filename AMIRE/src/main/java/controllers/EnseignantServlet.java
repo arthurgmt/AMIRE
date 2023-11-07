@@ -57,6 +57,7 @@ public class EnseignantServlet extends HttpServlet {
     }
 
     private void createEnseignant(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int UtilisateurID = Integer.parseInt(request.getParameter("UtilisateurID"));
         Integer experience = Integer.parseInt(request.getParameter("experience"));
         String telephone = request.getParameter("telephone");
         String siteWeb = request.getParameter("siteWeb");
@@ -69,6 +70,7 @@ public class EnseignantServlet extends HttpServlet {
         String competences = request.getParameter("competences");
 
         Enseignant enseignant = new Enseignant();
+        enseignant.setUtilisateurID(UtilisateurID);
         enseignant.setExperience(experience);
         enseignant.setTelephone(telephone);
         enseignant.setSiteWeb(siteWeb);
@@ -119,19 +121,19 @@ public class EnseignantServlet extends HttpServlet {
 
     private void getEnseignant(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Enseignant utilisateur = enseignantDAO.getEnseignantById(id);
-        if (utilisateur != null) {
-            request.setAttribute("user", utilisateur);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/user-detail.jsp");
+        Enseignant enseignant = enseignantDAO.getEnseignantById(id);
+        if (enseignant != null) {
+            request.setAttribute("enseignant", enseignant);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/enseignant/enseignant-detail.jsp");
             dispatcher.forward(request, response);
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Enseignant not found");
         }
     }
 
     private void getAllEnseignants(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("users", enseignantDAO.getAllEnseignants());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/users.jsp");
+        request.setAttribute("enseignants", enseignantDAO.getAllEnseignants());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/enseignant.jsp");
         dispatcher.forward(request, response);
     }
 }

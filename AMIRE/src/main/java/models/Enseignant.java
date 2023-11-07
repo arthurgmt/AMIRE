@@ -48,6 +48,22 @@ public class Enseignant {
     @JoinColumn(name = "UtilisateurID", insertable = false, updatable = false)
     private Utilisateur utilisateur;
 
+    public int getID() {
+        return this.ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getUtilisateurID() {
+        return this.UtilisateurID;
+    }
+
+    public void setUtilisateurID(int UtilisateurID) {
+        this.UtilisateurID = UtilisateurID;
+    }
+
     public int getExperience() {
         return this.Experience;
     }
