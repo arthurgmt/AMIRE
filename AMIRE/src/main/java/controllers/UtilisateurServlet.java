@@ -75,7 +75,7 @@ public class UtilisateurServlet extends HttpServlet {
         utilisateur.setMotDePasse(motDePasse);
         utilisateur.setRole(role);
 
-        if (role == "enseignant") {
+        if (role == "Enseignant") {
             int utilisateurID = utilisateur.getID();
             String telephone = request.getParameter("telephone");
             Date disponibilites = new Date(request.getParameter("disponibilites"));
@@ -90,7 +90,7 @@ public class UtilisateurServlet extends HttpServlet {
 
             utilisateurDAO.addUser(utilisateur);
             enseignantDAO.addEnseignant(enseignant);
-        } else if (role == "recruteur") {
+        } else if (role == "Recruteur") {
             int utilisateurID = utilisateur.getID();
             String raisonSociale = request.getParameter("raisonSociale");
             String adresse = request.getParameter("adresse");
