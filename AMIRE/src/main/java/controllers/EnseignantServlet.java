@@ -1,46 +1,39 @@
 package controllers;
 
 import dao.EnseignantDAO;
-import models.Enseignant;
+import jakarta.inject.Inject;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-import java.sql.Date;
+import models.Enseignant;
+import java.util.Date;
 
-/*@WebServlet("/enseignant")
+import java.io.IOException;
+
+@WebServlet("/utilisateur")
 public class EnseignantServlet extends HttpServlet {
 
+    @Inject
     private EnseignantDAO enseignantDAO;
 
     @Override
     public void init() {
-        enseignantDAO = new EnseignantDAO();
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println(request.getParameterMap());
         String action = request.getParameter("action");
-        if (action == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action not specified");
-            return;
-        }
 
         switch (action) {
-            case "register":
-                addEnseignant(request, response);
+            case "create":
+                createEnseignant(request, response);
                 break;
             case "update":
                 updateEnseignant(request, response);
-                break;
-            case "login":
-                break;
-            default:
-                response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED, "Action not handled");
                 break;
         }
     }
@@ -48,124 +41,97 @@ public class EnseignantServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (action == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action not specified");
-            return;
-        }
 
         switch (action) {
             case "delete":
                 deleteEnseignant(request, response);
                 break;
+            case "getall":
+                getAllEnseignants(request, response);
+                break;
             case "get":
                 getEnseignant(request, response);
                 break;
-            case "list":
-                listEnseignants(request, response);
-                break;
-            default:
-                response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED, "Action not handled");
-                break;
+            
         }
     }
 
-    private void addEnseignant(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            int utilisateurID = Integer.parseInt(request.getParameter("utilisateurID"));
-            int experience = Integer.parseInt(request.getParameter("experience"));
-            String telephone = request.getParameter("telephone");
-            String siteWeb = request.getParameter("siteWeb");
-            String niveauxSouhaites = request.getParameter("niveauxSouhaites");
-            Date disponibilites = Date.valueOf(request.getParameter("disponibilites"));
-            String typeContrat = request.getParameter("typeContrat");
-            String titresAcademiques = request.getParameter("titresAcademiques");
-            String evaluations = request.getParameter("evaluations");
-            String autresInformations = request.getParameter("autresInformations");
-            String competences = request.getParameter("competences");
-    
-            Enseignant newEnseignant = new Enseignant(
-                    utilisateurID,
-                    experience,
-                    telephone,
-                    siteWeb,
-                    niveauxSouhaites,
-                    disponibilites,
-                    typeContrat,
-                    titresAcademiques,
-                    evaluations,
-                    autresInformations,
-                    competences
-            );
-    
-            enseignantDAO.addEnseignant(newEnseignant);
-            response.sendRedirect("enseignants.jsp"); // Rediriger vers la liste des enseignants
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Erreur lors de l'ajout de l'enseignant.");
-        }
+    private void createEnseignant(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Integer experience = Integer.parseInt(request.getParameter("experience"));
+        String telephone = request.getParameter("telephone");
+        String siteWeb = request.getParameter("siteWeb");
+        String niveauxSouhaites = request.getParameter("niveauxSouhaites");
+        Date disponibilites = new Date(request.getParameter("disponibilites"));
+        String typeContrat = request.getParameter("typeContrat");
+        String titresAcademiques = request.getParameter("titresAcademiques");
+        String evaluations = request.getParameter("evaluations");
+        String autresInformations = request.getParameter("autresInformations");
+        String competences = request.getParameter("competences");
+
+        Enseignant enseignant = new Enseignant();
+        enseignant.setExperience(experience);
+        enseignant.setTelephone(telephone);
+        enseignant.setSiteWeb(siteWeb);
+        enseignant.setNiveauxSouhaites(niveauxSouhaites);
+        enseignant.setDisponibilites(disponibilites);
+        enseignant.setTypeContrat(typeContrat);
+        enseignant.setTitresAcademiques(titresAcademiques);
+        enseignant.setEvaluations(evaluations);
+        enseignant.setAutresInformations(autresInformations);
+        enseignant.setCompetences(competences);
+
+        enseignantDAO.addEnseignant(enseignant);
+        response.sendRedirect("login.jsp");
     }
-    
 
     private void updateEnseignant(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            int id = Integer.parseInt(request.getParameter("id"));
-            int utilisateurID = Integer.parseInt(request.getParameter("utilisateurID"));
-            int experience = Integer.parseInt(request.getParameter("experience"));
-            String telephone = request.getParameter("telephone");
-            String siteWeb = request.getParameter("siteWeb");
-            String niveauxSouhaites = request.getParameter("niveauxSouhaites");
-            Date disponibilites = Date.valueOf(request.getParameter("disponibilites"));
-            String typeContrat = request.getParameter("typeContrat");
-            String titresAcademiques = request.getParameter("titresAcademiques");
-            String evaluations = request.getParameter("evaluations");
-            String autresInformations = request.getParameter("autresInformations");
-            String competences = request.getParameter("competences");
-    
-            Enseignant enseignantToUpdate = new Enseignant(
-                    id,
-                    utilisateurID,
-                    experience,
-                    telephone,
-                    siteWeb,
-                    niveauxSouhaites,
-                    disponibilites,
-                    typeContrat,
-                    titresAcademiques,
-                    evaluations,
-                    autresInformations,
-                    competences
-            );
-    
-            enseignantDAO.updateEnseignant(enseignantToUpdate);
-            response.sendRedirect("enseignants.jsp");
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Erreur lors de la mise à jour de l'enseignant.");
-        }
+        Integer experience = Integer.parseInt(request.getParameter("experience"));
+        String telephone = request.getParameter("telephone");
+        String siteWeb = request.getParameter("siteWeb");
+        String niveauxSouhaites = request.getParameter("niveauxSouhaites");
+        Date disponibilites = new Date(request.getParameter("disponibilites"));
+        String typeContrat = request.getParameter("typeContrat");
+        String titresAcademiques = request.getParameter("titresAcademiques");
+        String evaluations = request.getParameter("evaluations");
+        String autresInformations = request.getParameter("autresInformations");
+        String competences = request.getParameter("competences");
+
+        Enseignant enseignant = new Enseignant();
+        enseignant.setExperience(experience);
+        enseignant.setTelephone(telephone);
+        enseignant.setSiteWeb(siteWeb);
+        enseignant.setNiveauxSouhaites(niveauxSouhaites);
+        enseignant.setDisponibilites(disponibilites);
+        enseignant.setTypeContrat(typeContrat);
+        enseignant.setTitresAcademiques(titresAcademiques);
+        enseignant.setEvaluations(evaluations);
+        enseignant.setAutresInformations(autresInformations);
+        enseignant.setCompetences(competences);
+
+        enseignantDAO.updateEnseignant(enseignant);
     }
-    
+
     private void deleteEnseignant(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         enseignantDAO.deleteEnseignant(id);
-        response.sendRedirect("enseignants.jsp"); 
+        // response.sendRedirect("users.jsp");
     }
 
     private void getEnseignant(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Enseignant enseignant = enseignantDAO.getEnseignantById(id);
-        if (enseignant != null) {
-            request.setAttribute("enseignant", enseignant);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/enseignant-detail.jsp");
+        Enseignant utilisateur = enseignantDAO.getEnseignantById(id);
+        if (utilisateur != null) {
+            request.setAttribute("user", utilisateur);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/user-detail.jsp");
             dispatcher.forward(request, response);
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Enseignant not found");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
         }
     }
 
-    private void listEnseignants(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Enseignant> listEnseignants = enseignantDAO.getAllEnseignants();
-        request.setAttribute("listEnseignants", listEnseignants);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/enseignant-list.jsp");
+    private void getAllEnseignants(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("users", enseignantDAO.getAllEnseignants());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/users.jsp");
         dispatcher.forward(request, response);
     }
-}*/
+}

@@ -40,7 +40,8 @@ public class UtilisateurServlet extends HttpServlet {
         }
     }
 
-    /*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
         switch (action) {
@@ -51,7 +52,7 @@ public class UtilisateurServlet extends HttpServlet {
                 getUser(request, response);
                 break;
         }
-    }*/
+    }
 
     private void createUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nom = request.getParameter("nom");

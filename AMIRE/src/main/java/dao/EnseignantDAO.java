@@ -1,17 +1,8 @@
 package dao;
 
 import beans.EnseignantBean;
-import beans.UtilisateurBean;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import jakarta.ejb.EJB;
-import jakarta.ejb.EntityBean;
-import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.PersistenceContext;
 import models.Enseignant;
 
 import java.util.List;
