@@ -16,8 +16,8 @@
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/app_db" />
-            <property name="jakarta.persistence.jdbc.user" value="root" />
-            <property name="jakarta.persistence.jdbc.password" value="root" />
+            <property name="jakarta.persistence.jdbc.user" value="postgres" />
+            <property name="jakarta.persistence.jdbc.password" value="Masamune31" />
 
             <!-- Les propriétés ci-dessous sont spécifiques à Hibernate, assurez-vous d'ajuster la version d'Hibernate selon votre installation -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />

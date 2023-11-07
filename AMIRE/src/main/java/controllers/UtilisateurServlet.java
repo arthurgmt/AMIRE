@@ -68,8 +68,7 @@ public class UtilisateurServlet extends HttpServlet {
         utilisateur.setRole(role);
 
         utilisateurDAO.addUser(utilisateur);
-        // TODO : redirect to login page
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("login.jsp");
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -114,13 +113,18 @@ public class UtilisateurServlet extends HttpServlet {
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String mail = request.getParameter("mail");
         String motDePasse = request.getParameter("motDePasse");
+        System.out.println("try connection");
         Utilisateur utilisateur = utilisateurDAO.login(mail, motDePasse);
+        System.out.println(utilisateur);
         if (utilisateur != null) {
             request.setAttribute("user", utilisateur);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/user.jsp");
             dispatcher.forward(request, response);
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
+            System.out.println("User not found");
+            request.setAttribute("loginError", true);
+            RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
+            rd.forward(request, response);
         }
     }
 }
