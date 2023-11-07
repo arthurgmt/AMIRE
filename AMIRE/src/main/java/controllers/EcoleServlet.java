@@ -15,7 +15,7 @@ import java.util.Date;
 
 import java.io.IOException;
 
-@WebServlet("/utilisateur")
+@WebServlet("/ecole")
 public class EcoleServlet extends HttpServlet {
 
     @Inject
