@@ -19,7 +19,7 @@
             <property name="jakarta.persistence.jdbc.user" value="root" />
             <property name="jakarta.persistence.jdbc.password" value="root" />
 
-            <!-- Les propriétés ci-dessous sont spécifiques à Hibernate, assurez-vous d'ajuster la version d'Hibernate selon votre installation -->
+            <!-- Les propriétés ci-dessous sont spécifiques à Hibernate -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
             <property name="hibernate.hbm2ddl.auto" value="update" /> <!-- Mettez "update" pour mettre à jour automatiquement la base de données, "create" pour la créer à chaque fois, ou "validate" pour aucune action -->
         </properties>
