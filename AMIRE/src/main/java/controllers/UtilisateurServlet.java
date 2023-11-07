@@ -1,6 +1,8 @@
 package controllers;
 
+import dao.EnseignantDAO;
 import dao.UtilisateurDAO;
+import dao.EcoleDAO;
 import jakarta.inject.Inject;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -8,7 +10,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.Enseignant;
 import models.Utilisateur;
+import models.Ecole;
+import java.util.Date;
 
 import java.io.IOException;
 
@@ -17,6 +22,8 @@ public class UtilisateurServlet extends HttpServlet {
 
     @Inject
     private UtilisateurDAO utilisateurDAO;
+    private EnseignantDAO enseignantDAO;
+    private EcoleDAO ecoleDAO;
 
     @Override
     public void init() {
@@ -68,8 +75,38 @@ public class UtilisateurServlet extends HttpServlet {
         utilisateur.setMotDePasse(motDePasse);
         utilisateur.setRole(role);
 
-        utilisateurDAO.addUser(utilisateur);
-        response.sendRedirect("login.jsp");
+        if (role == "enseignant") {
+            int utilisateurID = utilisateur.getID();
+            String telephone = request.getParameter("telephone");
+            Date disponibilites = new Date(request.getParameter("disponibilites"));
+            String competences = request.getParameter("competences");
+
+            Enseignant enseignant = new Enseignant();
+
+            enseignant.setUtilisateurID(utilisateurID);
+            enseignant.setTelephone(telephone);
+            enseignant.setDisponibilites(disponibilites);
+            enseignant.setCompetences(competences);
+
+            utilisateurDAO.addUser(utilisateur);
+            enseignantDAO.addEnseignant(enseignant);
+        } else if (role == "recruteur") {
+            int utilisateurID = utilisateur.getID();
+            String raisonSociale = request.getParameter("raisonSociale");
+            String adresse = request.getParameter("adresse");
+
+            Ecole ecole = new Ecole();
+            ecole.setUtilisateurID(utilisateurID);
+            ecole.setRaisonSociale(raisonSociale);
+            ecole.setAdresse(adresse);
+
+            utilisateurDAO.addUser(utilisateur);
+            ecoleDAO.addEcole(ecole);
+            // response.sendRedirect("login.jsp");
+        } else {
+            utilisateurDAO.addUser(utilisateur);
+            // response.sendRedirect("login.jsp");
+        }
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
