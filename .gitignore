@@ -35,3 +35,5 @@ target/*
 mysql/
 mysql/*
 ../mysql/
+AMIRE/.vscode/*
+AMIRE/target/*
