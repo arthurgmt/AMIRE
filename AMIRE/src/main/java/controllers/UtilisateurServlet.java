@@ -1,8 +1,6 @@
 package controllers;
 
-import dao.EnseignantDAO;
-import dao.UtilisateurDAO;
-import dao.EcoleDAO;
+import dao.*;
 import jakarta.inject.Inject;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -10,20 +8,26 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import models.Enseignant;
-import models.Utilisateur;
-import models.Ecole;
+import models.*;
+
 import java.util.Date;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/utilisateur")
 public class UtilisateurServlet extends HttpServlet {
 
     @Inject
     private UtilisateurDAO utilisateurDAO;
+    @Inject
     private EnseignantDAO enseignantDAO;
+    @Inject
     private EcoleDAO ecoleDAO;
+    @Inject
+    private CandidatureDAO candidatureDAO;
+    @Inject
+    private BesoinDAO besoinDAO;
 
     @Override
     public void init() {
@@ -102,11 +106,10 @@ public class UtilisateurServlet extends HttpServlet {
 
             utilisateurDAO.addUser(utilisateur);
             ecoleDAO.addEcole(ecole);
-            // response.sendRedirect("login.jsp");
         } else {
             utilisateurDAO.addUser(utilisateur);
-            // response.sendRedirect("login.jsp");
         }
+        response.sendRedirect("login.jsp");
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -151,18 +154,36 @@ public class UtilisateurServlet extends HttpServlet {
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String mail = request.getParameter("mail");
         String motDePasse = request.getParameter("motDePasse");
-        System.out.println("try connection");
         Utilisateur utilisateur = utilisateurDAO.login(mail, motDePasse);
-        System.out.println(utilisateur);
         if (utilisateur != null) {
-            request.setAttribute("user", utilisateur);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/user.jsp");
-            dispatcher.forward(request, response);
+            String role = utilisateur.getRole();
+            request.getSession().setAttribute("user", utilisateur);
+            if ("Enseignant".equals(role)) {
+                System.out.println("Enseignant");
+                List<Candidature> candidatures = candidatureDAO.getCandidaturesByEnseignantId(utilisateur.getID());
+                System.out.println("Candidatures: " + candidatures);
+                request.setAttribute("listCandidatures", candidatures);
+                request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
+            } else if ("Recruteur".equals(role)) {
+                System.out.println("Recruteur");
+                List<Besoin> besoins = besoinDAO.getBesoinsByEcoleID(utilisateur.getID());
+                System.out.println("Besoins: " + besoins);
+                request.setAttribute("listBesoins", besoins);
+                request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
+            } else if ("Admin".equals(role)) {
+                System.out.println("Admin");
+                List<Utilisateur> users = utilisateurDAO.getAllUtilisateurs();
+                System.out.println("Users: " + users);
+                request.setAttribute("listUsers", users);
+                request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
+            } else {
+                // Gérer d'autres rôles ou afficher un message d'erreur si le rôle n'est pas reconnu
+                response.sendRedirect("/erreur.jsp");
+            }
         } else {
             System.out.println("User not found");
             request.setAttribute("loginError", true);
-            RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
-            rd.forward(request, response);
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
     }
 }

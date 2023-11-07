@@ -1,17 +1,15 @@
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/App.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/controllers/EcoleServlet.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/controllers/UtilisateurServlet.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Competence.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/dao/UtilisateurDAO.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/util/DatabaseConfiguration.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Besoin.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Enseignant.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Ecole.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Utilisateur.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/dao/EcoleDAO.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Decision.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/BesoinCompetence.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/EnseignantCompetence.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/dao/EnseignantDAO.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/models/Candidature.java
-/Users/arthur/Documents/GitHub/AMIRE/AMIRE/src/main/java/controllers/EnseignantServlet.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\beans\UtilisateurBean.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\util\DatabaseConfiguration.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\dao\EnseignantDAO.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\controllers\UtilisateurServlet.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\controllers\EcoleServlet.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\App.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\controllers\EnseignantServlet.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\models\Candidature.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\dao\UtilisateurDAO.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\models\Enseignant.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\dao\EcoleDAO.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\models\Utilisateur.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\models\Ecole.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\models\Besoin.java
+D:\EFREI\S7\Programmation avancee\Projet\AMIRE\AMIRE\src\main\java\models\Decision.java
