@@ -6,8 +6,9 @@ import java.util.Date;
 @Entity
 @Table(name = "Enseignant")
 @NamedQueries({
+        @NamedQuery(name = "Enseignant.findAll", query = "SELECT e FROM Enseignant e"),
         @NamedQuery(name = "Enseignant.findByUtilisateurID", query = "SELECT e FROM Enseignant e WHERE e.UtilisateurID = :UtilisateurID"),
-        @NamedQuery(name = "Enseignant.findByCompetence", query = "SELECT e FROM Enseignant e WHERE e.Competences LIKE %:competence%")
+        @NamedQuery(name = "Enseignant.findByCompetence", query = "SELECT e FROM Enseignant e WHERE e.Competences LIKE :Competences")
 })
 public class Enseignant {
 

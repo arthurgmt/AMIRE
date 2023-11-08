@@ -60,7 +60,7 @@ public class CandidatureBean {
     }
     public List<Candidature> getCandidaturesByCompetenceEnseignantAndBesoinID(String competence, int besoinID) {
         return em.createNamedQuery("Candidature.findAllByCompetenceEnseignantAndBesoinID", Candidature.class)
-                .setParameter("competence", competence)
+                .setParameter("Competences", "%"+competence+"%")
                 .getResultList();
     }
 }

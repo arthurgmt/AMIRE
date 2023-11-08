@@ -61,7 +61,7 @@ public class BesoinBean {
 
     public List<Besoin> getBesoinsByEcoleName(String name) {
         return em.createNamedQuery("Besoin.findAllByEcoleName", Besoin.class)
-                .setParameter("Nom", name)
+                .setParameter("Nom", "%"+name+"%")
                 .getResultList();
     }
 }

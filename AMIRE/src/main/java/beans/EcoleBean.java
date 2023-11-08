@@ -63,7 +63,7 @@ public class EcoleBean {
 
     public List<Ecole> getEcolesByNom(String nom) {
         return em.createNamedQuery("Ecole.findByNom", Ecole.class)
-                .setParameter("nom", nom)
+                .setParameter("Nom", "%"+nom+"%")
                 .getResultList();
     }
 

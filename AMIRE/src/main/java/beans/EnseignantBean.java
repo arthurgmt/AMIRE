@@ -31,7 +31,7 @@ public class EnseignantBean {
     }
 
     public List<Enseignant> getAllEnseignants() {
-        return em.createNamedQuery("Utilisateur.findAll", Enseignant.class).getResultList();
+        return em.createNamedQuery("Enseignant.findAll", Enseignant.class).getResultList();
     }
 
     public Enseignant getEnseignantById(int id) {
@@ -47,7 +47,7 @@ public class EnseignantBean {
 
     public List<Enseignant> getEnseignantsByCompetence(String competence) {
         return em.createNamedQuery("Enseignant.findByCompetence", Enseignant.class)
-                .setParameter("competence", competence)
+                .setParameter("Competences","%"+competence+"%")
                 .getResultList();
     }
 
