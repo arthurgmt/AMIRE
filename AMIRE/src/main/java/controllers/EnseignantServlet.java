@@ -52,7 +52,10 @@ public class EnseignantServlet extends HttpServlet {
             case "get":
                 getEnseignant(request, response);
                 break;
-            
+            case "getbycompetence":
+                getEnseignantsByCompetence(request, response);
+                break;
+
         }
     }
 
@@ -133,6 +136,13 @@ public class EnseignantServlet extends HttpServlet {
 
     private void getAllEnseignants(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("enseignants", enseignantDAO.getAllEnseignants());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/enseignant.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void getEnseignantsByCompetence(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String competence = request.getParameter("competence");
+        request.setAttribute("enseignants", enseignantDAO.getEnseignantsByCompetence(competence));
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/enseignant.jsp");
         dispatcher.forward(request, response);
     }

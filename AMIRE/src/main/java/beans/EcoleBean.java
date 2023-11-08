@@ -61,4 +61,10 @@ public class EcoleBean {
         em.remove(getEcoleById(id));
     }
 
+    public List<Ecole> getEcolesByNom(String nom) {
+        return em.createNamedQuery("Ecole.findByNom", Ecole.class)
+                .setParameter("nom", nom)
+                .getResultList();
+    }
+
 }

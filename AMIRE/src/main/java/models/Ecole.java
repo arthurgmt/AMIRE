@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Ecole")
+@NamedQueries({
+        @NamedQuery(name = "Ecole.findByUtilisateurID", query = "SELECT e FROM Ecole e WHERE e.UtilisateurID = :UtilisateurID"),
+        @NamedQuery(name = "Ecole.findByNom", query = "SELECT e FROM Ecole e WHERE e.Nom LIKE %:nom%")
+})
 public class Ecole {
 
     @Id
@@ -24,6 +28,9 @@ public class Ecole {
 
     @Column(name = "Contact")
     private String Contact;
+
+    @Column(name = "Nom")
+    private String Nom;
 
     public int getID() {
         return this.ID;
@@ -71,5 +78,13 @@ public class Ecole {
 
     public void setContact(String Contact) {
         this.Contact = Contact;
+    }
+
+    public String getNom() {
+        return Nom;
+    }
+
+    public void setNom(String nom) {
+        Nom = nom;
     }
 }

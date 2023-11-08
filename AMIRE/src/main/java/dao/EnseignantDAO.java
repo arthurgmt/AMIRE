@@ -29,4 +29,5 @@ public class EnseignantDAO {
     public Enseignant getEnseignantByUtilisateurId(int id) {
         return enseignantBean.getEnseignantByUtilisateurId(id);
     }
+    public List<Enseignant> getEnseignantsByCompetence(String competence) {return enseignantBean.getEnseignantsByCompetence(competence);}
 }
