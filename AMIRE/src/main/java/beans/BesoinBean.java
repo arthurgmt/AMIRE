@@ -58,4 +58,10 @@ public class BesoinBean {
     public void deleteBesoin(int id) {
         em.remove(getBesoinById(id));
     }
+
+    public List<Besoin> getBesoinsByEcoleName(String name) {
+        return em.createNamedQuery("Besoin.findAllByEcoleName", Besoin.class)
+                .setParameter("Nom", name)
+                .getResultList();
+    }
 }

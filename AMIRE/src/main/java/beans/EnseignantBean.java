@@ -45,6 +45,12 @@ public class EnseignantBean {
                 .getSingleResult();
     }
 
+    public List<Enseignant> getEnseignantsByCompetence(String competence) {
+        return em.createNamedQuery("Enseignant.findByCompetence", Enseignant.class)
+                .setParameter("competence", competence)
+                .getResultList();
+    }
+
     public void addEnseignant(Enseignant enseignant) {
         em.getTransaction().begin();
         em.persist(enseignant);
@@ -59,5 +65,4 @@ public class EnseignantBean {
     public void deleteEnseignant(int id) {
         em.remove(getEnseignantById(id));
     }
-
 }

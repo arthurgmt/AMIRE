@@ -35,4 +35,8 @@ public class BesoinDAO {
     public List<Besoin> getBesoinsByEcoleID(int id) {
         return besoinBean.getBesoinsByEcoleID(id);
     }
+
+    public List<Besoin> getBesoinsByEcoleName(String name) {
+        return besoinBean.getBesoinsByEcoleName(name);
+    }
 }

@@ -58,4 +58,9 @@ public class CandidatureBean {
     public void deleteCandidature(int id) {
         em.remove(getCandidatureById(id));
     }
+    public List<Candidature> getCandidaturesByCompetenceEnseignantAndBesoinID(String competence, int besoinID) {
+        return em.createNamedQuery("Candidature.findAllByCompetenceEnseignantAndBesoinID", Candidature.class)
+                .setParameter("competence", competence)
+                .getResultList();
+    }
 }

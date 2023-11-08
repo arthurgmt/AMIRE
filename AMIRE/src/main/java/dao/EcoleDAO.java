@@ -38,4 +38,5 @@ public class EcoleDAO {
     public Ecole getEcoleByUtilisateurId(int id) {
         return ecoleBean.getEcoleByUtilisateurId(id);
     }
+    public List<Ecole> getEcolesByNom(String nom) {return ecoleBean.getEcolesByNom(nom);}
 }

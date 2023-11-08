@@ -5,6 +5,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Enseignant")
+@NamedQueries({
+        @NamedQuery(name = "Enseignant.findByUtilisateurID", query = "SELECT e FROM Enseignant e WHERE e.UtilisateurID = :UtilisateurID"),
+        @NamedQuery(name = "Enseignant.findByCompetence", query = "SELECT e FROM Enseignant e WHERE e.Competences LIKE %:competence%")
+})
 public class Enseignant {
 
     @Id

@@ -7,7 +7,8 @@ import jakarta.persistence.*;
 @Table(name = "Candidature")
 @NamedQueries({
         @NamedQuery(name = "Candidature.findAll", query = "SELECT c FROM Candidature c"),
-        @NamedQuery(name = "Candidature.findAllByEnseignantID", query = "SELECT c FROM Candidature c WHERE c.EnseignantID = :EnseignantID")
+        @NamedQuery(name = "Candidature.findAllByEnseignantID", query = "SELECT c FROM Candidature c WHERE c.EnseignantID = :EnseignantID"),
+        @NamedQuery(name = "Candidature.findAllByCompetenceEnseignantAndBesoinID", query = "SELECT c FROM Candidature c WHERE c.BesoinID = :besoinID AND c.EnseignantID = (SELECT e.ID FROM Enseignant e WHERE e.Competences LIKE %:competence%)")
 })
 public class Candidature {
 
@@ -67,5 +68,29 @@ public class Candidature {
 
     public void setDecision(Decision decision) {
         this.decision = decision;
+    }
+
+    public int getEnseignantID() {
+        return EnseignantID;
+    }
+
+    public void setEnseignantID(int enseignantID) {
+        EnseignantID = enseignantID;
+    }
+
+    public int getBesoinID() {
+        return BesoinID;
+    }
+
+    public void setBesoinID(int besoinID) {
+        BesoinID = besoinID;
+    }
+
+    public int getDecisionID() {
+        return DecisionID;
+    }
+
+    public void setDecisionID(int decisionID) {
+        DecisionID = decisionID;
     }
 }

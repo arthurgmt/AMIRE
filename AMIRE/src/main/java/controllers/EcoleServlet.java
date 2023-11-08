@@ -54,6 +54,9 @@ public class EcoleServlet extends HttpServlet {
             case "get":
                 getEcole(request, response);
                 break;
+            case "getbyname":
+                getEcoleByName(request, response);
+                break;
             
         }
     }
@@ -113,6 +116,13 @@ public class EcoleServlet extends HttpServlet {
 
     private void getAllEcole(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("users", ecoleDAO.getAllEcoles());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/users.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void getEcoleByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String nom = request.getParameter("nom");
+        request.setAttribute("users", ecoleDAO.getEcolesByNom(nom));
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/users.jsp");
         dispatcher.forward(request, response);
     }
