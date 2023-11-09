@@ -6,6 +6,7 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.*;
@@ -47,6 +48,9 @@ public class UtilisateurServlet extends HttpServlet {
                 break;
             case "login":
                 login(request, response);
+                break;
+            case "logout":
+                logout(request, response);
                 break;
         }
     }
@@ -185,5 +189,15 @@ public class UtilisateurServlet extends HttpServlet {
             request.setAttribute("loginError", true);
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
+    }
+
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Invalider la session pour déconnecter l'utilisateur
+        HttpSession session = request.getSession(false); // false signifie ne pas créer une nouvelle session si elle n'existe pas
+        if (session != null) {
+            session.invalidate(); // Cela va détruire la session
+        }
+        // Rediriger vers la page de connexion ou la page d'accueil après la déconnexion
+        response.sendRedirect(request.getContextPath() + "/dashboard.jsp");
     }
 }

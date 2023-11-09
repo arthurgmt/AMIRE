@@ -27,7 +27,7 @@
     <c:when test="${user.role == 'Admin'}">
         <h3>Liste d'Utilisateurs :</h3>
         <c:forEach items="${listUsers}" var="utilisateur">
-            <p>${utilisateur.nom} ${utilisateur.prenom}</p>
+            <p>${utilisateur.nom} ${utilisateur.prenom} ${utilisateur.role}</p>
         </c:forEach>
     </c:when>
     <c:otherwise>

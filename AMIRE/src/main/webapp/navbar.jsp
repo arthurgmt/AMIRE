@@ -28,7 +28,11 @@
                             <a class="nav-link" href="#">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Logout</a>
+                            <form action="utilisateur" method="post">
+                                
+                                <input type="hidden" name="action" value="logout">
+                                <button type="submit" class="nobtn">Logout</button>
+                            </form>
                         </li>
                     </c:otherwise>
                 </c:choose>
