@@ -31,38 +31,68 @@ public class EnseignantBean {
     }
 
     public List<Enseignant> getAllEnseignants() {
-        return em.createNamedQuery("Enseignant.findAll", Enseignant.class).getResultList();
+        try{
+            return em.createNamedQuery("Enseignant.findAll", Enseignant.class).getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Enseignant getEnseignantById(int id) {
-
-        return em.find(Enseignant.class, id);
+        try{
+            return em.find(Enseignant.class, id);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Enseignant getEnseignantByUtilisateurId(int Userid) {
-        return em.createNamedQuery("Enseignant.findByUtilisateurID", Enseignant.class)
-                .setParameter("UtilisateurID", Userid)
-                .getSingleResult();
+        try{
+            return em.createNamedQuery("Enseignant.findByUtilisateurID", Enseignant.class)
+                    .setParameter("UtilisateurID", Userid)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public List<Enseignant> getEnseignantsByCompetence(String competence) {
-        return em.createNamedQuery("Enseignant.findByCompetence", Enseignant.class)
-                .setParameter("Competences","%"+competence+"%")
-                .getResultList();
+        try{
+            return em.createNamedQuery("Enseignant.findByCompetence", Enseignant.class)
+                    .setParameter("Competences","%"+competence+"%")
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void addEnseignant(Enseignant enseignant) {
-        em.getTransaction().begin();
-        em.persist(enseignant);
-        em.getTransaction().commit();
+        try{
+            em.getTransaction().begin();
+            em.persist(enseignant);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public void updateEnseignant(Enseignant enseignant) {
-        em.merge(enseignant);
-
+        try{
+            em.getTransaction().begin();
+            em.merge(enseignant);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public void deleteEnseignant(int id) {
-        em.remove(getEnseignantById(id));
+        try{
+            em.getTransaction().begin();
+            em.remove(getEnseignantById(id));
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 }

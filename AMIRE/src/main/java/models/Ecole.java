@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Ecole")
 @NamedQueries({
+        @NamedQuery(name = "Ecole.findAll", query = "SELECT e FROM Ecole e"),
         @NamedQuery(name = "Ecole.findByUtilisateurID", query = "SELECT e FROM Ecole e WHERE e.UtilisateurID = :UtilisateurID"),
         @NamedQuery(name = "Ecole.findByNom", query = "SELECT e FROM Ecole e WHERE e.Nom LIKE :Nom")
 })

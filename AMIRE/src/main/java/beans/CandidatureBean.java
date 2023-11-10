@@ -32,35 +32,68 @@ public class CandidatureBean {
     }
 
     public List<Candidature> getAllCandidatures() {
-        return em.createNamedQuery("Candidature.findAll", Candidature.class).getResultList();
+        try{
+            return em.createNamedQuery("Candidature.findAll", Candidature.class).getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Candidature getCandidatureById(int id) {
-        return em.find(Candidature.class, id);
+        try{
+            return em.find(Candidature.class, id);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public List<Candidature> getCandidaturesByEnseignantId(int id) {
-        return em.createNamedQuery("Candidature.findAllByEnseignantID", Candidature.class)
-                .setParameter("EnseignantID", id)
-                .getResultList();
+        try{
+            return em.createNamedQuery("Candidature.findAllByEnseignantID", Candidature.class)
+                    .setParameter("EnseignantID", id)
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void addCandidature(Candidature candidature) {
-        em.getTransaction().begin();
-        em.persist(candidature);
-        em.getTransaction().commit();
+        try{
+            em.getTransaction().begin();
+            em.persist(candidature);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public void updateCandidature(Candidature candidature) {
-        em.merge(candidature);
+        try{
+            em.getTransaction().begin();
+            em.merge(candidature);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public void deleteCandidature(int id) {
-        em.remove(getCandidatureById(id));
+        try{
+            em.getTransaction().begin();
+            em.remove(getCandidatureById(id));
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
     public List<Candidature> getCandidaturesByCompetenceEnseignantAndBesoinID(String competence, int besoinID) {
-        return em.createNamedQuery("Candidature.findAllByCompetenceEnseignantAndBesoinID", Candidature.class)
-                .setParameter("Competences", "%"+competence+"%")
-                .getResultList();
+        try{
+            return em.createNamedQuery("Candidature.findAllByCompetenceEnseignantAndBesoinID", Candidature.class)
+                    .setParameter("Competences", "%"+competence+"%")
+                    .setParameter("besoinID", besoinID)
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

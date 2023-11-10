@@ -32,36 +32,68 @@ public class BesoinBean {
     }
 
     public List<Besoin> getAllBesoins() {
-        return em.createNamedQuery("Besoin.findAll", Besoin.class).getResultList();
+        try {
+            return em.createNamedQuery("Besoin.findAll", Besoin.class).getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Besoin getBesoinById(int id) {
-        return em.find(Besoin.class, id);
+        try{
+            return em.find(Besoin.class, id);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public List<Besoin> getBesoinsByEcoleID(int id) {
-        return em.createNamedQuery("Besoin.findAllByEcoleID", Besoin.class)
-                .setParameter("EcoleID", id)
-                .getResultList();
+        try{
+            return em.createNamedQuery("Besoin.findAllByEcoleID", Besoin.class)
+                    .setParameter("EcoleID", id)
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void addBesoin(Besoin besoin) {
-        em.getTransaction().begin();
-        em.persist(besoin);
-        em.getTransaction().commit();
+        try{
+            em.getTransaction().begin();
+            em.persist(besoin);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public void updateBesoin(Besoin besoin) {
-        em.merge(besoin);
+        try{
+            em.getTransaction().begin();
+            em.merge(besoin);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public void deleteBesoin(int id) {
-        em.remove(getBesoinById(id));
+        try{
+            em.getTransaction().begin();
+            em.remove(getBesoinById(id));
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public List<Besoin> getBesoinsByEcoleName(String name) {
-        return em.createNamedQuery("Besoin.findAllByEcoleName", Besoin.class)
-                .setParameter("Nom", "%"+name+"%")
-                .getResultList();
+        try{
+            return em.createNamedQuery("Besoin.findAllByEcoleName", Besoin.class)
+                    .setParameter("Nom", "%"+name+"%")
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

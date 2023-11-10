@@ -32,39 +32,68 @@ public class EcoleBean {
     }
 
     public List<Ecole> getAllEcoles() {
-        return em.createNamedQuery("Utilisateur.findAll", Ecole.class).getResultList();
+        try{
+            return em.createNamedQuery("Ecole.findAll", Ecole.class).getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Ecole getEcoleById(int id) {
-
-        return em.find(Ecole.class, id);
+        try {
+            return em.find(Ecole.class, id);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Ecole getEcoleByUtilisateurId(int Userid) {
-        return em.createNamedQuery("Ecole.findByUtilisateurID", Ecole.class)
-                .setParameter("UtilisateurID", Userid)
-                .getSingleResult();
+        try{
+            return em.createNamedQuery("Ecole.findByUtilisateurID", Ecole.class)
+                    .setParameter("UtilisateurID", Userid)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void addEcole(Ecole ecole) {
-        em.getTransaction().begin();
-        em.persist(ecole);
-        em.getTransaction().commit();
+        try{
+            em.getTransaction().begin();
+            em.persist(ecole);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public void updateEcole(Ecole ecole) {
-        em.merge(ecole);
-
+        try {
+            em.getTransaction().begin();
+            em.merge(ecole);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public void deleteEcole(int id) {
-        em.remove(getEcoleById(id));
+        try{
+            em.getTransaction().begin();
+            em.remove(getEcoleById(id));
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public List<Ecole> getEcolesByNom(String nom) {
-        return em.createNamedQuery("Ecole.findByNom", Ecole.class)
-                .setParameter("Nom", "%"+nom+"%")
-                .getResultList();
+        try {
+            return em.createNamedQuery("Ecole.findByNom", Ecole.class)
+                    .setParameter("Nom", "%"+nom+"%")
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
-
 }

@@ -32,27 +32,49 @@ public class UtilisateurBean {
     }
 
     public List<Utilisateur> getAllUtilisateurs() {
-        return em.createNamedQuery("Utilisateur.findAll", Utilisateur.class).getResultList();
+        try {
+            return em.createNamedQuery("Utilisateur.findAll", Utilisateur.class).getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Utilisateur getUserById(int id) {
-
-        return em.find(Utilisateur.class, id);
+        try {
+            return em.find(Utilisateur.class, id);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void addUser(Utilisateur utilisateur) {
-        em.getTransaction().begin();
-        em.persist(utilisateur);
-        em.getTransaction().commit();
+        try{
+            em.getTransaction().begin();
+            em.persist(utilisateur);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public void updateUser(Utilisateur utilisateur) {
-        em.merge(utilisateur);
-
+        try{
+            em.getTransaction().begin();
+            em.merge(utilisateur);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public void deleteUser(int id) {
-        em.remove(getUserById(id));
+        try{
+            em.getTransaction().begin();
+            em.remove(getUserById(id));
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
     }
 
     public Utilisateur login(String mail, String password) {
