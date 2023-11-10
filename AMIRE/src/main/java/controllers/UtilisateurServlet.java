@@ -110,10 +110,12 @@ public class UtilisateurServlet extends HttpServlet {
         } else if (role.contains("Recruteur")) {
             String raisonSociale = request.getParameter("RaisonSociale");
             String adresse = request.getParameter("Adresse");
+            String nomecole = request.getParameter("Nom");
 
             Ecole ecole = new Ecole();
             ecole.setRaisonSociale(raisonSociale);
             ecole.setAdresse(adresse);
+            ecole.setNom(nomecole);
 
             utilisateurDAO.addUser(utilisateur);
 
@@ -177,25 +179,14 @@ public class UtilisateurServlet extends HttpServlet {
                 Enseignant enseignant = enseignantDAO.getEnseignantByUtilisateurId(utilisateur.getID());
                 request.getSession().setAttribute("enseignant", enseignant); //ajout de l'enseignant à la session
 
-                System.out.println("Enseignant");
-                List<Candidature> candidatures = candidatureDAO.getCandidaturesByEnseignantId(utilisateur.getID());
-                System.out.println("Candidatures: " + candidatures);
-                request.setAttribute("listCandidatures", candidatures);
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
             } else if ("Recruteur".equals(role)) {
                 Ecole ecole = ecoleDAO.getEcoleByUtilisateurId(utilisateur.getID());
                 request.getSession().setAttribute("ecole", ecole); //ajout de l'ecole à la session
 
-                System.out.println("Recruteur");
-                List<Besoin> besoins = besoinDAO.getBesoinsByEcoleID(utilisateur.getID());
-                System.out.println("Besoins: " + besoins);
-                request.setAttribute("listBesoins", besoins);
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
             } else if ("Admin".equals(role)) {
-                System.out.println("Admin");
-                List<Utilisateur> users = utilisateurDAO.getAllUtilisateurs();
-                System.out.println("Users: " + users);
-                request.setAttribute("listUsers", users);
+                
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
             } else {
                 // Gérer d'autres rôles ou afficher un message d'erreur si le rôle n'est pas reconnu
