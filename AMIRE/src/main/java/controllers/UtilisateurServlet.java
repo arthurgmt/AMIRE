@@ -110,7 +110,7 @@ public class UtilisateurServlet extends HttpServlet {
         } else if (role.contains("Recruteur")) {
             String raisonSociale = request.getParameter("RaisonSociale");
             String adresse = request.getParameter("Adresse");
-            String nomecole = request.getParameter("Nom");
+            String nomecole = request.getParameter("NomEcole");
 
             Ecole ecole = new Ecole();
             ecole.setRaisonSociale(raisonSociale);

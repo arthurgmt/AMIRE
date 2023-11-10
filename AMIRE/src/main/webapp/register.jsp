@@ -83,7 +83,7 @@
                 </div>  
                 <div class="form-group">
                     <label for="Nom">Nom:</label>
-                    <input type="text" class="form-control" id="Nom" name="Nom">
+                    <input type="text" class="form-control" id="NomEcole" name="Nom">
                 </div>
             </div>
 
