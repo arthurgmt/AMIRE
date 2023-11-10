@@ -170,12 +170,18 @@ public class UtilisateurServlet extends HttpServlet {
             String role = utilisateur.getRole();
             request.getSession().setAttribute("user", utilisateur);
             if ("Enseignant".equals(role)) {
+                Enseignant enseignant = enseignantDAO.getEnseignantByUtilisateurId(utilisateur.getID());
+                request.getSession().setAttribute("enseignant", enseignant); //ajout de l'enseignant à la session
+
                 System.out.println("Enseignant");
                 List<Candidature> candidatures = candidatureDAO.getCandidaturesByEnseignantId(utilisateur.getID());
                 System.out.println("Candidatures: " + candidatures);
                 request.setAttribute("listCandidatures", candidatures);
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
             } else if ("Recruteur".equals(role)) {
+                Ecole ecole = ecoleDAO.getEcoleByUtilisateurId(utilisateur.getID());
+                request.getSession().setAttribute("ecole", ecole); //ajout de l'ecole à la session
+
                 System.out.println("Recruteur");
                 List<Besoin> besoins = besoinDAO.getBesoinsByEcoleID(utilisateur.getID());
                 System.out.println("Besoins: " + besoins);
