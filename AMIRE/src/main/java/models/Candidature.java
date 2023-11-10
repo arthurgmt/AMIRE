@@ -1,14 +1,20 @@
 package models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "Candidature")
+@NamedQueries({
+        @NamedQuery(name = "Candidature.findAll", query = "SELECT c FROM Candidature c"),
+        @NamedQuery(name = "Candidature.findAllByEnseignantID", query = "SELECT c FROM Candidature c WHERE c.EnseignantID = :EnseignantID"),
+        @NamedQuery(name = "Candidature.findAllByCompetenceEnseignantAndBesoinID", query = "SELECT c FROM Candidature c WHERE c.BesoinID = :besoinID AND c.EnseignantID = (SELECT e.ID FROM Enseignant e WHERE e.Competences LIKE :Competences)"),
+        @NamedQuery(name = "Candidature.findAllByBesoinID", query = "SELECT c FROM Candidature c WHERE c.BesoinID = :BesoinID")
+})
 public class Candidature {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
     private int ID;
 
     @Column(name = "EnseignantID", nullable = false)
@@ -17,9 +23,6 @@ public class Candidature {
     @Column(name = "BesoinID", nullable = false)
     private int BesoinID;
 
-    @Column(name = "DecisionID", nullable = false)
-    private int DecisionID;
-
     @ManyToOne
     @JoinColumn(name = "EnseignantID", insertable = false, updatable = false)
     private Enseignant enseignant;
@@ -27,20 +30,6 @@ public class Candidature {
     @ManyToOne
     @JoinColumn(name = "BesoinID", insertable = false, updatable = false)
     private Besoin besoin;
-
-    @ManyToOne
-    @JoinColumn(name = "DecisionID", insertable = false, updatable = false)
-    private Decision decision;
-    
-    public Candidature(int ID, Enseignant enseignant, Besoin besoin, Decision decision) {
-        this.ID = ID;
-        this.enseignant = enseignant;
-        this.besoin = besoin;
-        this.decision = decision;
-    }
-
-    public Candidature() {
-    }
 
     public int getID() {
         return this.ID;
@@ -66,11 +55,19 @@ public class Candidature {
         this.besoin = besoin;
     }
 
-    public Decision getDecision() {
-        return this.decision;
+    public int getEnseignantID() {
+        return EnseignantID;
     }
 
-    public void setDecision(Decision decision) {
-        this.decision = decision;
+    public void setEnseignantID(int enseignantID) {
+        EnseignantID = enseignantID;
+    }
+
+    public int getBesoinID() {
+        return BesoinID;
+    }
+
+    public void setBesoinID(int besoinID) {
+        BesoinID = besoinID;
     }
 }

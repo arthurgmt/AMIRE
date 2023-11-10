@@ -1,15 +1,27 @@
 package models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "Decision")
+@NamedQueries({
+        @NamedQuery(name = "Decision.findAll", query = "SELECT d FROM Decision d"),
+        @NamedQuery(name = "Decision.findByCandidatureID", query = "SELECT d FROM Decision d WHERE d.CandidatureID = :CandidatureID"),
+        @NamedQuery(name = "Decision.findAllByBesoinID", query = "SELECT d FROM Decision d WHERE d.CandidatureID = (SELECT c.ID FROM Candidature c WHERE c.BesoinID = :BesoinID)")
+})
 public class Decision {
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
+
+    @Column(name = "CandidatureID", nullable = false)
+    private int CandidatureID;
+
+    @OneToOne
+    @JoinColumn(name = "CandidatureID", insertable = false, updatable = false)
+    private Candidature candidature;
 
     @Column(name = "Statut", nullable = false)
     private String Statut;
@@ -19,16 +31,6 @@ public class Decision {
 
     @Column(name = "Commentaires", columnDefinition="TEXT")
     private String Commentaires;
-
-    public Decision(int ID, String Statut, Date DateDecision, String Commentaires) {
-        this.ID = ID;
-        this.Statut = Statut;
-        this.DateDecision = DateDecision;
-        this.Commentaires = Commentaires;
-    }
-
-    public Decision() {
-    }
 
     public int getID() {
         return this.ID;
@@ -60,5 +62,21 @@ public class Decision {
 
     public void setCommentaires(String Commentaires) {
         this.Commentaires = Commentaires;
+    }
+
+    public int getCandidatureID() {
+        return CandidatureID;
+    }
+
+    public void setCandidatureID(int candidatureID) {
+        CandidatureID = candidatureID;
+    }
+
+    public Candidature getCandidature() {
+        return candidature;
+    }
+
+    public void setCandidature(Candidature candidature) {
+        this.candidature = candidature;
     }
 }

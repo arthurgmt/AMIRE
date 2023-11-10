@@ -1,13 +1,19 @@
 package models;
 
-import javax.persistence.*;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Besoin")
+@NamedQueries({
+        @NamedQuery(name = "Besoin.findAll", query = "SELECT b FROM Besoin b"),
+        @NamedQuery(name = "Besoin.findAllByEcoleID", query = "SELECT b FROM Besoin b WHERE b.EcoleID = :EcoleID"),
+        @NamedQuery(name = "Besoin.findAllByEcoleName", query = "SELECT b FROM Besoin b WHERE b.EcoleID = (SELECT e.ID FROM Ecole e WHERE e.Nom LIKE :Nom)")
+})
 public class Besoin {
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
 
     @Column(name = "EcoleID", nullable = false)
@@ -19,20 +25,12 @@ public class Besoin {
     @Column(name = "Remarques", columnDefinition="TEXT")
     private String Remarques;
 
-    @Column(name = "Exigences", nullable = false, columnDefinition="TEXT")
-    private String Exigences;
+    @Column(name = "Competences", nullable = false, columnDefinition="TEXT")
+    private String Competences;
 
     @ManyToOne
     @JoinColumn(name = "EcoleID", insertable = false, updatable = false)
     private Ecole ecole;
-    
-    public Besoin(int ID, Ecole ecole, String Periode, String Remarques, String Exigences) {
-        this.ID = ID;
-        this.ecole = ecole;
-        this.Periode = Periode;
-        this.Remarques = Remarques;
-        this.Exigences = Exigences;
-    }
 
     public int getID() {
         return this.ID;
@@ -58,12 +56,12 @@ public class Besoin {
         this.Remarques = Remarques;
     }
 
-    public String getExigences() {
-        return this.Exigences;
+    public String getCompetences() {
+        return this.Competences;
     }
 
-    public void setExigences(String Exigences) {
-        this.Exigences = Exigences;
+    public void setCompetences(String Competences) {
+        this.Competences = Competences;
     }
 
     public Ecole getEcole() {
@@ -72,5 +70,13 @@ public class Besoin {
 
     public void setEcole(Ecole ecole) {
         this.ecole = ecole;
+    }
+
+    public int getEcoleID() {
+        return EcoleID;
+    }
+
+    public void setEcoleID(int ecoleID) {
+        EcoleID = ecoleID;
     }
 }

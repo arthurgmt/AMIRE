@@ -27,3 +27,13 @@ replay_pid*
 *.idea/
 .idea/*
 .DS_Store
+../.DS_Store
+*.DS_Store
+target/
+../target/
+target/*
+mysql/
+mysql/*
+../mysql/
+AMIRE/.vscode/*
+AMIRE/target/*

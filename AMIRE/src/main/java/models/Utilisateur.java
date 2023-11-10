@@ -1,18 +1,16 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-// import javax.persistence.ManyToOne;
-// import javax.persistence.JoinColumn;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Utilisateur")
+@NamedQueries({
+        @NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u"),
+        @NamedQuery(name = "Utilisateur.findByMail", query = "SELECT u FROM Utilisateur u WHERE u.Mail = :Mail"),
+        @NamedQuery(name = "Utilisateur.findByMailAndMotDePasse", query = "SELECT u FROM Utilisateur u WHERE u.Mail = :Mail AND u.MotDePasse = :MotDePasse")
+})
 public class Utilisateur {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
@@ -23,7 +21,7 @@ public class Utilisateur {
     @Column(name = "Prenom", nullable = false)
     private String Prenom;
 
-    @Column(name = "Mail", nullable = false)
+    @Column(name = "Mail", nullable = false, unique = true)
     private String Mail;
 
     @Column(name = "MotDePasse", nullable = false)
@@ -31,18 +29,6 @@ public class Utilisateur {
 
     @Column(name = "Role", nullable = false)
     private String Role;
-
-    public Utilisateur(int ID, String Nom, String Prenom, String Mail, String MotDePasse, String Role) {
-        this.ID = ID;
-        this.Nom = Nom;
-        this.Prenom = Prenom;
-        this.Mail = Mail;
-        this.MotDePasse = MotDePasse;
-        this.Role = Role;
-    }
-
-    public Utilisateur() {
-    }
 
     public int getID() {
         return this.ID;

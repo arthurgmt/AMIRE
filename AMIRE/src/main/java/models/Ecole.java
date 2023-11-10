@@ -1,13 +1,18 @@
 package models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Ecole")
+@NamedQueries({
+        @NamedQuery(name = "Ecole.findAll", query = "SELECT e FROM Ecole e"),
+        @NamedQuery(name = "Ecole.findByUtilisateurID", query = "SELECT e FROM Ecole e WHERE e.UtilisateurID = :UtilisateurID"),
+        @NamedQuery(name = "Ecole.findByNom", query = "SELECT e FROM Ecole e WHERE e.Nom LIKE :Nom")
+})
 public class Ecole {
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
 
     @Column(name = "UtilisateurID", nullable = false)
@@ -25,17 +30,8 @@ public class Ecole {
     @Column(name = "Contact")
     private String Contact;
 
-
-    public Ecole(int UtilisateurID, String RaisonSociale, String Adresse, String SiteWeb, String Contact) {
-        this.UtilisateurID = UtilisateurID;
-        this.RaisonSociale = RaisonSociale;
-        this.Adresse = Adresse;
-        this.SiteWeb = SiteWeb;
-        this.Contact = Contact;
-    }
-
-    public Ecole() {
-    }
+    @Column(name = "Nom")
+    private String Nom;
 
     public int getID() {
         return this.ID;
@@ -83,5 +79,13 @@ public class Ecole {
 
     public void setContact(String Contact) {
         this.Contact = Contact;
+    }
+
+    public String getNom() {
+        return Nom;
+    }
+
+    public void setNom(String nom) {
+        Nom = nom;
     }
 }

@@ -1,22 +1,33 @@
 package controllers;
 
 import dao.EcoleDAO;
+import jakarta.inject.Inject;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import models.Ecole;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import models.Enseignant;
+
+import java.util.Date;
+
 import java.io.IOException;
 
 @WebServlet("/ecole")
 public class EcoleServlet extends HttpServlet {
 
+    @Inject
     private EcoleDAO ecoleDAO;
 
+    @Override
     public void init() {
-        ecoleDAO = new EcoleDAO();
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println(request.getParameterMap());
         String action = request.getParameter("action");
 
         switch (action) {
@@ -29,6 +40,7 @@ public class EcoleServlet extends HttpServlet {
         }
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
@@ -36,64 +48,88 @@ public class EcoleServlet extends HttpServlet {
             case "delete":
                 deleteEcole(request, response);
                 break;
+            case "getall":
+                getAllEcole(request, response);
+                break;
             case "get":
                 getEcole(request, response);
                 break;
-            case "list":
-                listEcoles(request, response);
+            case "getbyname":
+                getEcoleByName(request, response);
                 break;
+            
         }
     }
 
     private void createEcole(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String raisonSociale = request.getParameter("raisonSociale");
-        String adresse = request.getParameter("adresse");
-        String siteWeb = request.getParameter("siteWeb");
-        String contact = request.getParameter("contact");
+        int UtilisateurID = Integer.parseInt(request.getParameter("UtilisateurID"));
+        String RaisonSociale = request.getParameter("RaisonSociale");
+        String Adresse = request.getParameter("Adresse");
+        String SiteWeb = request.getParameter("SiteWeb");
+        String Contact = request.getParameter("Contact");
+        String Nom = request.getParameter("Nom");
 
         Ecole ecole = new Ecole();
-        ecole.setRaisonSociale(raisonSociale);
-        ecole.setAdresse(adresse);
-        ecole.setSiteWeb(siteWeb);
-        ecole.setContact(contact);
+        ecole.setUtilisateurID(UtilisateurID);
+        ecole.setRaisonSociale(RaisonSociale);
+        ecole.setAdresse(Adresse);
+        ecole.setSiteWeb(SiteWeb);
+        ecole.setContact(Contact);
+        ecole.setNom(Nom);
 
         ecoleDAO.addEcole(ecole);
-        response.sendRedirect("ecoles.jsp"); // adjust the redirection supersimista
+        // response.sendRedirect("ecole.jsp");
     }
 
     private void updateEcole(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String raisonSociale = request.getParameter("raisonSociale");
-        String adresse = request.getParameter("adresse");
-        String siteWeb = request.getParameter("siteWeb");
-        String contact = request.getParameter("contact");
 
-        Ecole ecole = new Ecole(id, raisonSociale, adresse, siteWeb, contact);
+        int id = Integer.parseInt(request.getParameter("id"));
+        String RaisonSociale = request.getParameter("RaisonSociale");
+        String Adresse = request.getParameter("Adresse");
+        String SiteWeb = request.getParameter("SiteWeb");
+        String Contact = request.getParameter("Contact");
+        String Nom = request.getParameter("Nom");
+
+        Ecole ecole = ecoleDAO.getEcoleById(id);
+
+        ecole.setRaisonSociale(RaisonSociale);
+        ecole.setAdresse(Adresse);
+        ecole.setSiteWeb(SiteWeb);
+        ecole.setContact(Contact);
+        ecole.setNom(Nom);  
+
         ecoleDAO.updateEcole(ecole);
-        response.sendRedirect("ecoles.jsp"); // adjust the redirection simista la resta
+        response.sendRedirect("profile.jsp");
     }
 
     private void deleteEcole(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         ecoleDAO.deleteEcole(id);
-        response.sendRedirect("ecoles.jsp"); // adjust the redirection simista pro front
+        // response.sendRedirect("users.jsp");
     }
 
     private void getEcole(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Ecole ecole = ecoleDAO.getEcoleById(id);
         if (ecole != null) {
-            request.setAttribute("ecole", ecole);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("ecole-detail.jsp"); // adjust the path simista bibiche
+            request.setAttribute("user", ecole);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/user-detail.jsp");
             dispatcher.forward(request, response);
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "School not found");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Ecole not found");
         }
     }
 
-    private void listEcoles(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("ecoles", ecoleDAO.getAllEcoles());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ecoles.jsp"); // adjust the path simistaaaaaaa
+    private void getAllEcole(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("users", ecoleDAO.getAllEcoles());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/users.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void getEcoleByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String nom = request.getParameter("nom");
+        request.setAttribute("users", ecoleDAO.getEcolesByNom(nom));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/users.jsp");
         dispatcher.forward(request, response);
     }
 }

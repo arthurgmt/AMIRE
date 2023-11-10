@@ -1,14 +1,19 @@
 package models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "Enseignant")
+@NamedQueries({
+        @NamedQuery(name = "Enseignant.findAll", query = "SELECT e FROM Enseignant e"),
+        @NamedQuery(name = "Enseignant.findByUtilisateurID", query = "SELECT e FROM Enseignant e WHERE e.UtilisateurID = :UtilisateurID"),
+        @NamedQuery(name = "Enseignant.findByCompetence", query = "SELECT e FROM Enseignant e WHERE e.Competences LIKE :Competences")
+})
 public class Enseignant {
 
     @Id
-    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
 
     @Column(name = "UtilisateurID", nullable = false)
@@ -41,61 +46,27 @@ public class Enseignant {
     @Column(name = "AutresInformations", columnDefinition="TEXT")
     private String AutresInformations;
 
+    @Column(name = "Competences", columnDefinition = "TEXT", nullable = false)
+    private String Competences;
+
     @OneToOne
     @JoinColumn(name = "UtilisateurID", insertable = false, updatable = false)
     private Utilisateur utilisateur;
-
-
-    public Enseignant(int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations,  Utilisateur utilisateur) {
-        this.UtilisateurID = UtilisateurID;
-        this.Experience = Experience;
-        this.Telephone = Telephone;
-        this.SiteWeb = SiteWeb;
-        this.NiveauxSouhaites = NiveauxSouhaites;
-        this.Disponibilites = Disponibilites;
-        this.TypeContrat = TypeContrat;
-        this.TitresAcademiques = TitresAcademiques;
-        this.Evaluations = Evaluations;
-        this.AutresInformations = AutresInformations;
-        this.utilisateur = utilisateur;
-    }
-
-    public Enseignant(int ID, int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations) {
-        this.ID = ID;
-        this.UtilisateurID = UtilisateurID;
-        this.Experience = Experience;
-        this.Telephone = Telephone;
-        this.SiteWeb = SiteWeb;
-        this.NiveauxSouhaites = NiveauxSouhaites;
-        this.Disponibilites = Disponibilites;
-        this.TypeContrat = TypeContrat;
-        this.TitresAcademiques = TitresAcademiques;
-        this.Evaluations = Evaluations;
-        this.AutresInformations = AutresInformations;
-    }
-
-    public Enseignant(int UtilisateurID, int Experience, String Telephone, String SiteWeb, String NiveauxSouhaites, Date Disponibilites, String TypeContrat, String TitresAcademiques, String Evaluations, String AutresInformations) {
-        this.UtilisateurID = UtilisateurID;
-        this.Experience = Experience;
-        this.Telephone = Telephone;
-        this.SiteWeb = SiteWeb;
-        this.NiveauxSouhaites = NiveauxSouhaites;
-        this.Disponibilites = Disponibilites;
-        this.TypeContrat = TypeContrat;
-        this.TitresAcademiques = TitresAcademiques;
-        this.Evaluations = Evaluations;
-        this.AutresInformations = AutresInformations;
-    }
-
-    public Enseignant() {
-    }
 
     public int getID() {
         return this.ID;
     }
 
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
     public int getUtilisateurID() {
         return this.UtilisateurID;
+    }
+
+    public void setUtilisateurID(int UtilisateurID) {
+        this.UtilisateurID = UtilisateurID;
     }
 
     public int getExperience() {
@@ -170,4 +141,11 @@ public class Enseignant {
         this.AutresInformations = AutresInformations;
     }
 
+    public String getCompetences() {
+        return Competences;
+    }
+
+    public void setCompetences(String competences) {
+        Competences = competences;
+    }
 }
