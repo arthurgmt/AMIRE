@@ -23,9 +23,6 @@ public class Candidature {
     @Column(name = "BesoinID", nullable = false)
     private int BesoinID;
 
-    @Column(name = "DecisionID", nullable = false)
-    private int DecisionID;
-
     @ManyToOne
     @JoinColumn(name = "EnseignantID", insertable = false, updatable = false)
     private Enseignant enseignant;
@@ -33,10 +30,6 @@ public class Candidature {
     @ManyToOne
     @JoinColumn(name = "BesoinID", insertable = false, updatable = false)
     private Besoin besoin;
-
-    @ManyToOne
-    @JoinColumn(name = "DecisionID", insertable = false, updatable = false)
-    private Decision decision;
 
     public int getID() {
         return this.ID;
@@ -62,14 +55,6 @@ public class Candidature {
         this.besoin = besoin;
     }
 
-    public Decision getDecision() {
-        return this.decision;
-    }
-
-    public void setDecision(Decision decision) {
-        this.decision = decision;
-    }
-
     public int getEnseignantID() {
         return EnseignantID;
     }
@@ -84,13 +69,5 @@ public class Candidature {
 
     public void setBesoinID(int besoinID) {
         BesoinID = besoinID;
-    }
-
-    public int getDecisionID() {
-        return DecisionID;
-    }
-
-    public void setDecisionID(int decisionID) {
-        DecisionID = decisionID;
     }
 }

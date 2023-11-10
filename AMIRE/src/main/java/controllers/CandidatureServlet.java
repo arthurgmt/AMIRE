@@ -74,7 +74,6 @@ public class CandidatureServlet extends HttpServlet {
         Candidature candidature = new Candidature();
         candidature.setEnseignantID(EnseignantID);
         candidature.setBesoinID(BesoinID);
-        candidature.setDecisionID(DecisionID);
 
         candidatureDAO.updateCandidature(candidature);
     }

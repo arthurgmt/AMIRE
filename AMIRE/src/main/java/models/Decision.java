@@ -5,11 +5,22 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Decision")
+@NamedQueries({
+        @NamedQuery(name = "Decision.findAll", query = "SELECT d FROM Decision d"),
+        @NamedQuery(name = "Decision.findByCandidatureID", query = "SELECT d FROM Decision d WHERE d.CandidatureID = :CandidatureID"),
+})
 public class Decision {
 
     @Id
     @Column(name = "ID", nullable = false)
     private int ID;
+
+    @Column(name = "CandidatureID", nullable = false)
+    private int CandidatureID;
+
+    @OneToOne
+    @JoinColumn(name = "CandidatureID", insertable = false, updatable = false)
+    private Candidature candidature;
 
     @Column(name = "Statut", nullable = false)
     private String Statut;
@@ -50,5 +61,21 @@ public class Decision {
 
     public void setCommentaires(String Commentaires) {
         this.Commentaires = Commentaires;
+    }
+
+    public int getCandidatureID() {
+        return CandidatureID;
+    }
+
+    public void setCandidatureID(int candidatureID) {
+        CandidatureID = candidatureID;
+    }
+
+    public Candidature getCandidature() {
+        return candidature;
+    }
+
+    public void setCandidature(Candidature candidature) {
+        this.candidature = candidature;
     }
 }

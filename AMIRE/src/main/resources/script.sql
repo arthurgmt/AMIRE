@@ -30,8 +30,8 @@ CREATE TABLE Ecole (
     Adresse TEXT NOT NULL,
     SiteWeb VARCHAR(255),
     Contact VARCHAR(255),
-    FOREIGN KEY (UtilisateurID) REFERENCES Utilisateur(ID),
-    Nom VARCHAR(255) NOT NULL
+    Nom VARCHAR(255) NOT NULL,
+    FOREIGN KEY (UtilisateurID) REFERENCES Utilisateur(ID)
 );
 CREATE TABLE Besoin (
     ID SERIAL PRIMARY KEY,
@@ -43,16 +43,18 @@ CREATE TABLE Besoin (
 );
 CREATE TABLE Decision (
     ID SERIAL PRIMARY KEY,
+    CandidatureID INT NOT NULL,
     Statut VARCHAR(50) NOT NULL,
     DateDecision DATE NOT NULL,
-    Commentaires TEXT
+    Commentaires TEXT,
+    FOREIGN KEY (CandidatureID) REFERENCES Candidature(ID),
+    UNIQUE (CandidatureID)
 );
 CREATE TABLE Candidature (
     ID SERIAL PRIMARY KEY,
     EnseignantID INT NOT NULL,
     BesoinID INT NOT NULL,
-    DecisionID INT,
     FOREIGN KEY (EnseignantID) REFERENCES Enseignant(ID),
     FOREIGN KEY (BesoinID) REFERENCES Besoin(ID),
-    FOREIGN KEY (DecisionID) REFERENCES Decision(ID)
+    UNIQUE (EnseignantID, BesoinID)
 );
