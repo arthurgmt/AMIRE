@@ -36,5 +36,8 @@ public class UtilisateurDAO {
     public Utilisateur getUserById(int id) {
         return utilisateurBean.getUserById(id);
     }
+    public Utilisateur getUserByMail(String mail) {
+        return utilisateurBean.getUserByMail(mail);
+    }
 
 }
