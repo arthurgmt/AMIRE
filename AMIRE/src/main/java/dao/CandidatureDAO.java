@@ -20,4 +20,5 @@ public class CandidatureDAO {
     public Candidature getCandidatureById(int id) { return candidatureBean.getCandidatureById(id); }
     public List<Candidature> getCandidaturesByEnseignantId(int id) { return candidatureBean.getCandidaturesByEnseignantId(id); }
     public List<Candidature> getCandidaturesByCompetenceEnseignantAndBesoinID(String competence, int besoinID) { return candidatureBean.getCandidaturesByCompetenceEnseignantAndBesoinID(competence, besoinID); }
+    public List<Candidature> getCandidaturesByBesoinID(int besoinID) { return candidatureBean.getCandidaturesByBesoinID(besoinID); }
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Liste des postes</title>
+    <title>Liste des candidatures</title>
 </head>
 <body>
 <%@ include file="navbar.jsp"%>
@@ -20,6 +20,7 @@
                 <th>Remarques</th>
                 <th>Competences</th>
                 <th>Supprimer</th>
+                <th>Décision</th>
             </tr>
             </thead>
             <tbody>
@@ -36,6 +37,7 @@
                         <input type="hidden" name="EnseignantID" value="${candi.enseignant.ID}">
                         <td><button type="submit" class="btn btn-danger">Supprimer</button></td>
                     </form>
+                    <td><a href="decision?action=getbycandidature&id=${candi.ID}" class="btn btn-primary">Info</a></td>
                 </tr>
             </c:forEach>
             </tbody>

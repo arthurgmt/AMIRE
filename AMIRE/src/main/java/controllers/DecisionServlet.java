@@ -1,5 +1,6 @@
 package controllers;
 
+import dao.CandidatureDAO;
 import dao.DecisionDAO;
 import jakarta.inject.Inject;
 import jakarta.servlet.RequestDispatcher;
@@ -8,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.Candidature;
 import models.Decision;
 
 import java.io.IOException;
@@ -17,6 +19,8 @@ import java.util.Date;
 public class DecisionServlet  extends HttpServlet {
     @Inject
     DecisionDAO decisionDAO;
+    @Inject
+    CandidatureDAO candidatureDAO;
 
     @Override
     public void init() {
@@ -33,6 +37,9 @@ public class DecisionServlet  extends HttpServlet {
                 break;
             case "update":
                 updateDecision(request, response);
+                break;
+            case "beforecreate":
+                beforeCreate(request, response);
                 break;
         }
     }
@@ -57,13 +64,29 @@ public class DecisionServlet  extends HttpServlet {
             case "getbybesoin":
                 getDecisionsByBesoin(request, response);
                 break;
+            case "beforecreate":
+                request.setAttribute("candiID", request.getParameter("candiID"));
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/CreateDecision.jsp");
+                dispatcher.forward(request, response);
+                break;
         }
     }
 
-    private void createDecision(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int CandidatureID = Integer.parseInt(request.getParameter("CandidatureID"));
-        String Status = request.getParameter("Status");
-        String Commentaires = request.getParameter("Commentaires");
+    private void beforeCreate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setAttribute("candiID", request.getParameter("candiID"));
+        request.setAttribute("besoinID", request.getParameter("besoinID"));
+        Decision decision = decisionDAO.getDecisionByCandidatureId(Integer.parseInt(request.getParameter("candiID")));
+        if (decision != null) {
+            request.setAttribute("decision", decision);
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/CreateDecision.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void createDecision(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int CandidatureID = Integer.parseInt(request.getParameter("candiID"));
+        String Status = request.getParameter("status");
+        String Commentaires = request.getParameter("commentaire");
 
         Decision decision = new Decision();
         if (CandidatureID >= 0) decision.setCandidatureID(CandidatureID);
@@ -72,13 +95,14 @@ public class DecisionServlet  extends HttpServlet {
         if (Status != null) decision.setStatut(Status);
 
         decisionDAO.addDecision(decision);
-        // response.sendRedirect("ecole.jsp");
+        Candidature candidature = candidatureDAO.getCandidatureById(CandidatureID);
+        request.getRequestDispatcher("candidature?action=getbybesoinid&id=" + candidature.getBesoinID()).forward(request, response);
     }
 
     private void updateDecision(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int ID = Integer.parseInt(request.getParameter("ID"));
-        String Status = request.getParameter("Status");
-        String Commentaires = request.getParameter("Commentaires");
+        int ID = Integer.parseInt(request.getParameter("besoinID"));
+        String Status = request.getParameter("statuss");
+        String Commentaires = request.getParameter("commentaires");
 
         Decision decision = decisionDAO.getDecisionById(ID);
         if (decision == null) {
@@ -90,6 +114,7 @@ public class DecisionServlet  extends HttpServlet {
         if (Status != null) decision.setStatut(Status);
 
         decisionDAO.updateDecision(decision);
+        response.sendRedirect(request.getContextPath() + "candidature?action=getbybesoinid&id=" + ID);
     }
 
     private void deleteDecision(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -114,8 +139,8 @@ public class DecisionServlet  extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Decision decision = decisionDAO.getDecisionByCandidatureId(id);
         if (decision != null) {
-            request.setAttribute("user", decision);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/user-detail.jsp");
+            request.setAttribute("decision", decision);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("DecisionInfo.jsp");
             dispatcher.forward(request, response);
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Decision not found");

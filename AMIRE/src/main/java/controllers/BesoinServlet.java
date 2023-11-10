@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Besoin;
 import models.Ecole;
-import models.Utilisateur;
 
 import java.io.IOException;
 import java.util.List;
@@ -132,10 +131,11 @@ public class BesoinServlet extends HttpServlet {
         }
     }
 
-    private void getAllBesoin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private List<Besoin> getAllBesoin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Besoin> besoins = besoinDAO.getAllBesoins();
         request.setAttribute("besoins", besoins);
         request.getRequestDispatcher("/listBesoin.jsp").forward(request, response);
+        return besoins;
     }
 
     private void getBesoinByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

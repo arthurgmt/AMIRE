@@ -59,6 +59,14 @@ public class CandidatureServlet extends HttpServlet {
                 request.setAttribute("candidatures", getCandidatureByEnseignant(request, response));
                 request.getRequestDispatcher("/ListeCandidature.jsp").forward(request, response);
                 break;
+            case "getbycompetenceandbesoinid":
+                getCandidatureByCompetenceAndBesoinID(request, response);
+                break;
+            case "getbybesoinid":
+                request.setAttribute("besoinID", request.getParameter("id"));
+                request.setAttribute("candidatures", candidatureDAO.getCandidaturesByBesoinID(Integer.parseInt(request.getParameter("id"))));
+                request.getRequestDispatcher("/listCandidature.jsp").forward(request, response);
+                break;
         }
     }
 
@@ -125,8 +133,9 @@ public class CandidatureServlet extends HttpServlet {
     private void getCandidatureByCompetenceAndBesoinID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int besoinID = Integer.parseInt(request.getParameter("besoinID"));
         String competence = request.getParameter("competence");
-        request.setAttribute("users", candidatureDAO.getCandidaturesByCompetenceEnseignantAndBesoinID(competence, besoinID));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/users.jsp");
+        request.setAttribute("candidatures", candidatureDAO.getCandidaturesByCompetenceEnseignantAndBesoinID(competence, besoinID));
+        request.setAttribute("recherche", competence);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/listCandidature.jsp");
         dispatcher.forward(request, response);
     }
 }

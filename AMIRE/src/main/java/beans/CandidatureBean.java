@@ -96,4 +96,14 @@ public class CandidatureBean {
             return null;
         }
     }
+
+    public List<Candidature> getCandidaturesByBesoinID(int besoinID) {
+        try{
+            return em.createNamedQuery("Candidature.findAllByBesoinID", Candidature.class)
+                    .setParameter("BesoinID", besoinID)
+                    .getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

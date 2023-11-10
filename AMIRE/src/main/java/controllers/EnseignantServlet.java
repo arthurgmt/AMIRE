@@ -133,7 +133,7 @@ public class EnseignantServlet extends HttpServlet {
         Enseignant enseignant = enseignantDAO.getEnseignantById(id);
         if (enseignant != null) {
             request.setAttribute("enseignant", enseignant);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/enseignant/enseignant-detail.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/enseignantInfo.jsp");
             dispatcher.forward(request, response);
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Enseignant not found");

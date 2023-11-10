@@ -8,7 +8,8 @@ import jakarta.persistence.*;
 @NamedQueries({
         @NamedQuery(name = "Candidature.findAll", query = "SELECT c FROM Candidature c"),
         @NamedQuery(name = "Candidature.findAllByEnseignantID", query = "SELECT c FROM Candidature c WHERE c.EnseignantID = :EnseignantID"),
-        @NamedQuery(name = "Candidature.findAllByCompetenceEnseignantAndBesoinID", query = "SELECT c FROM Candidature c WHERE c.BesoinID = :besoinID AND c.EnseignantID = (SELECT e.ID FROM Enseignant e WHERE e.Competences LIKE :Competences)")
+        @NamedQuery(name = "Candidature.findAllByCompetenceEnseignantAndBesoinID", query = "SELECT c FROM Candidature c WHERE c.BesoinID = :besoinID AND c.EnseignantID = (SELECT e.ID FROM Enseignant e WHERE e.Competences LIKE :Competences)"),
+        @NamedQuery(name = "Candidature.findAllByBesoinID", query = "SELECT c FROM Candidature c WHERE c.BesoinID = :BesoinID")
 })
 public class Candidature {
 
