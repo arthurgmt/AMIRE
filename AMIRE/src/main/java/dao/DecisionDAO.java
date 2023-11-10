@@ -19,5 +19,6 @@ public class DecisionDAO {
     public void deleteDecision(int id) { decisionBean.deleteDecision(id); }
     public java.util.List<Decision> getAllDecisions() { return decisionBean.getAllDecisions(); }
     public Decision getDecisionById(int id) { return decisionBean.getDecisionById(id); }
-    public List<Decision> getDecisionsByCandidatureId(int CandidatureID) { return decisionBean.getDecisionsByCandidatureId(CandidatureID); }
+    public Decision getDecisionByCandidatureId(int CandidatureID) { return decisionBean.getDecisionByCandidatureId(CandidatureID); }
+    public List<Decision> getDecisionsByBesoinId(int BesoinID) { return decisionBean.getDecisionsByBesoinId(BesoinID); }
 }

@@ -101,4 +101,19 @@ public class CandidatureServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/users.jsp");
         dispatcher.forward(request, response);
     }
+
+    private void getCandidatureByEnseignant(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        request.setAttribute("users", candidatureDAO.getCandidaturesByEnseignantId(id));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/users.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void getCandidatureByCompetenceAndBesoinID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int besoinID = Integer.parseInt(request.getParameter("besoinID"));
+        String competence = request.getParameter("competence");
+        request.setAttribute("users", candidatureDAO.getCandidaturesByCompetenceEnseignantAndBesoinID(competence, besoinID));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/users.jsp");
+        dispatcher.forward(request, response);
+    }
 }
