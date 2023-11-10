@@ -13,7 +13,7 @@ import java.util.Date;
 public class Enseignant {
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
 
     @Column(name = "UtilisateurID", nullable = false)

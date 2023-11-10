@@ -16,6 +16,7 @@
         <h3>Profile Enseignant:</h3>
         <!-- <%-- Form for Enseignant --%> -->
         <form action="enseignant" method="post">
+            <input type="hidden" name="id" value="${enseignantID}">
             <input type="number" name="Experience" placeholder="Experience" value="${enseignant.experience}">
             <input type="text" name="Telephone" placeholder="Telephone" value="${enseignant.telephone}">
             <input type="text" name="SiteWeb" placeholder="SiteWeb" value="${enseignant.siteweb}">            
@@ -35,7 +36,7 @@
         <h3>Profile Recruteur:</h3>
         <%-- Form for Recruteur --%>
         <form action="ecole" method="post">
-            <input type="number" name="id" value="${ecole.id}"> 
+            <input type="hidden" name="id" value="${ecoleID}"> 
             <input type="text" name="RaisonSociale" placeholder="RaisonSociale" value="${ecole.raisonSociale}">
             <input type="text" name="Adresse" placeholder="Adresse" value="${ecole.adresse}">
             <input type="text" name="SiteWeb" placeholder="SiteWeb" value="${ecole.siteWeb}">

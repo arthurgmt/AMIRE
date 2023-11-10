@@ -8,7 +8,7 @@ import java.util.Date;
 public class Decision {
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
 
     @Column(name = "Statut", nullable = false)
