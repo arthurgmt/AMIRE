@@ -86,17 +86,21 @@ public class BesoinServlet extends HttpServlet {
     }
 
     private void updateBesoin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int ID = Integer.parseInt(request.getParameter("ID"));
         int EcoleID = Integer.parseInt(request.getParameter("EcoleID"));
         String Periode = request.getParameter("Periode");
         String Remarque = request.getParameter("Remarque");
         String Competence = request.getParameter("Competence");
 
-        Besoin besoin = new Besoin();
-        besoin.setEcoleID(EcoleID);
-        besoin.setPeriode(Periode);
-        besoin.setRemarques(Remarque);
-        besoin.setCompetences(Competence);
-
+        Besoin besoin = besoinDAO.getBesoinById(ID);
+        if (besoin == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "candidature not found");
+            return;
+        }
+        if (EcoleID != 0) besoin.setEcoleID(EcoleID);
+        if (Periode != null) besoin.setPeriode(Periode);
+        if (Remarque != null) besoin.setRemarques(Remarque);
+        if (Competence != null) besoin.setCompetences(Competence);
         besoinDAO.updateBesoin(besoin);
     }
 

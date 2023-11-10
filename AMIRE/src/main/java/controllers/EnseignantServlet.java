@@ -90,6 +90,7 @@ public class EnseignantServlet extends HttpServlet {
     }
 
     private void updateEnseignant(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int ID = Integer.parseInt(request.getParameter("ID"));
         Integer experience = Integer.parseInt(request.getParameter("experience"));
         String telephone = request.getParameter("telephone");
         String siteWeb = request.getParameter("siteWeb");
@@ -101,17 +102,22 @@ public class EnseignantServlet extends HttpServlet {
         String autresInformations = request.getParameter("autresInformations");
         String competences = request.getParameter("competences");
 
-        Enseignant enseignant = new Enseignant();
-        enseignant.setExperience(experience);
-        enseignant.setTelephone(telephone);
-        enseignant.setSiteWeb(siteWeb);
-        enseignant.setNiveauxSouhaites(niveauxSouhaites);
-        enseignant.setDisponibilites(disponibilites);
-        enseignant.setTypeContrat(typeContrat);
-        enseignant.setTitresAcademiques(titresAcademiques);
-        enseignant.setEvaluations(evaluations);
-        enseignant.setAutresInformations(autresInformations);
-        enseignant.setCompetences(competences);
+        Enseignant enseignant = enseignantDAO.getEnseignantById(ID);
+
+        if (enseignant == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Enseignant not found");
+            return;
+        }
+        if (experience != 0) enseignant.setExperience(experience);
+        if (telephone != null) enseignant.setTelephone(telephone);
+        if (siteWeb != null) enseignant.setSiteWeb(siteWeb);
+        if (niveauxSouhaites != null) enseignant.setNiveauxSouhaites(niveauxSouhaites);
+        if (disponibilites != null) enseignant.setDisponibilites(disponibilites);
+        if (typeContrat != null) enseignant.setTypeContrat(typeContrat);
+        if (titresAcademiques != null) enseignant.setTitresAcademiques(titresAcademiques);
+        if (evaluations != null) enseignant.setEvaluations(evaluations);
+        if (autresInformations != null)enseignant.setAutresInformations(autresInformations);
+        if (competences != null) enseignant.setCompetences(competences);
 
         enseignantDAO.updateEnseignant(enseignant);
     }

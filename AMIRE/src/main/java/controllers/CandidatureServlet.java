@@ -67,13 +67,18 @@ public class CandidatureServlet extends HttpServlet {
     }
 
     private void updateCandidature(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int ID = Integer.parseInt(request.getParameter("ID"));
         int EnseignantID = Integer.parseInt(request.getParameter("EnseignantID"));
         int BesoinID = Integer.parseInt(request.getParameter("BesoinID"));
-        int DecisionID = Integer.parseInt(request.getParameter("DecisionID"));
 
-        Candidature candidature = new Candidature();
-        candidature.setEnseignantID(EnseignantID);
-        candidature.setBesoinID(BesoinID);
+        Candidature candidature = candidatureDAO.getCandidatureById(ID);
+         if (candidature == null) {
+             response.sendError(HttpServletResponse.SC_NOT_FOUND, "candidature not found");
+             return;
+         }
+
+        if (EnseignantID != 0) candidature.setEnseignantID(EnseignantID);
+        if (BesoinID != 0) candidature.setBesoinID(BesoinID);
 
         candidatureDAO.updateCandidature(candidature);
     }

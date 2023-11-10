@@ -137,8 +137,11 @@ public class UtilisateurServlet extends HttpServlet {
         String motDePasse = request.getParameter("motDePasse");
         String role = request.getParameter("role");
 
-        Utilisateur utilisateur = new Utilisateur();
-        // id, nom, prenom, mail, motDePasse, role
+        Utilisateur utilisateur = utilisateurDAO.getUserById(id);
+        if (utilisateur == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
+            return;
+        }
         utilisateur.setID(id);
         utilisateur.setNom(nom);
         utilisateur.setPrenom(prenom);
