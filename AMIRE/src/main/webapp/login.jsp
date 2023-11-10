@@ -11,25 +11,25 @@
 <%@ include file="navbar.jsp" %>
 <div class="container mt-5">
     <div class="row col-md-6 offset-md-3">
-        <h2>Login to Your Account</h2>
+        <h2>Se connecter</h2>
         <form action="utilisateur" method="post">
             <div class="form-group">
                 <label for="mail">Email:</label>
                 <input type="email" class="form-control" id="mail" name="mail" required>
             </div>
             <div class="form-group">
-                <label for="pwd">Password:</label>
+                <label for="pwd">Mot de passe:</label>
                 <input type="password" class="form-control" id="pwd" name="motDePasse" required>
             </div>
             <input type="hidden" name="action" value="login">
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-primary">Se connecter</button>
         </form>
         <c:if test="${not empty requestScope.loginError}">
             <div id="login-error" class="alert alert-danger">
-            Invalid email or password. Please try again.
+            Mauvaise adresse email ou mot de passe.
             </div>
         </c:if>
-        <p class="mt-3">Not registered? <a href="register.jsp">Create an account</a></p>
+        <p class="mt-3">Pas de compte ?<a href="/register.jsp">Créer un compte</a></p>
     </div>
 </div>
 </body>

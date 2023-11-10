@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="home.jsp">AMIRE LE BOGOSS</a>
+        <a class="navbar-brand">AMIRE LE BOGOSS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,10 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="dashboard.jsp">Accueil</a>
                 </li>
                 <c:choose>
                     <%-- For non-logged in users --%>
@@ -33,7 +30,7 @@
                                     <a class="nav-link" href="enseignant">Enseignant</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/besoin?action=listEnseignantBesoin">Postes disponibles</a>
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/besoin?action=list">Postes disponibles</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="${pageContext.request.contextPath}/candidature?action=getbyenseignant&id=${enseignant.ID}">Mes candidatures</a>

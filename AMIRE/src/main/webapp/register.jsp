@@ -21,18 +21,18 @@
 <%@ include file="navbar.jsp" %>
 <div class="container mt-5">
     <div class="row col-md-6 offset-md-3">
-        <h2>Create New Account</h2>
+        <h2>Créer un nouveau compte</h2>
         <form action="utilisateur" method="post" id="registrationForm">
             <!-- Champs existants -->
             <!-- ... -->
 
             <div class="form-group">
-                <label for="nom">Last Name:</label>
+                <label for="nom">Nom de famille:</label>
                 <input type="text" class="form-control" id="nom" name="nom" required>
             </div>
 
             <div class="form-group">
-                <label for="prenom">First Name:</label>
+                <label for="prenom">Prénom:</label>
                 <input type="text" class="form-control" id="prenom" name="prenom" required>
             </div>
 
@@ -42,12 +42,12 @@
             </div>
 
             <div class="form-group">
-                <label for="pwd">Password:</label>
+                <label for="pwd">Mot de passe:</label>
                 <input type="password" class="form-control" id="pwd" name="motDePasse" required>
             </div>
 
             <div class="form-group">
-                <label for="role">Role:</label>
+                <label for="role">Rôle:</label>
                 <select class="form-control" id="role" name="role" onchange="displayFields(this)">
                     <option value="Admin">Admin</option>
                     <option value="Enseignant">Enseignant</option>
@@ -90,6 +90,11 @@
             <input type="hidden" name="action" value="register">
             <button type="submit" class="btn btn-primary">S'inscrire</button>
         </form>
+        <c:if test="${not empty requestScope.registerError}">
+            <div id="register-error" class="alert alert-danger">
+                Adresse email déjà utilisée.
+            </div>
+        </c:if>
         <p>Vous possédez déjà un compte? <a href="login.jsp">Se connecter</a></p>
     </div>
 </div>

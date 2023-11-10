@@ -8,30 +8,64 @@
 </head>
 <body>
 <%@ include file="navbar.jsp"%>
-<h2>Tableau de Bord</h2>
+<div class="container mt-4">
+    <h2>Tableau de Bord</h2>
 
-<c:choose>
-    <c:when test="${user.role == 'Enseignant'}">
-        <h3>Liste de Candidatures :</h3>
-        <c:forEach items="${listCandidatures}" var="cours">
-            <p>${cours.nomCours}</p>
-        </c:forEach>
-    </c:when>
-    <c:when test="${user.role == 'Recruteur'}">
-        <h3>Liste des besoins :</h3>
-        <c:forEach items="${listBesoins}" var="offre">
-            <p>${offre.nomOffre}</p>
-        </c:forEach>
-    </c:when>
-    <c:when test="${user.role == 'Admin'}">
-        <h3>Liste d'Utilisateurs :</h3>
-        <c:forEach items="${listUsers}" var="utilisateur">
-            <p>${utilisateur.nom} ${utilisateur.prenom} ${utilisateur.role}</p>
-        </c:forEach>
-    </c:when>
-    <c:otherwise>
-        <p>Rôle non reconnu</p>
-    </c:otherwise>
-</c:choose>
+    <c:choose>
+        <c:when test="${user.role eq 'Enseignant'}">
+            <h3>Liste de Candidatures :</h3>
+            <div class="list-group">
+                <c:forEach items="${candidatures}" var="candidature">
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <h5 class="mb-1">${candidature.besoin.ecole.nom}</h5>
+                        <p class="mb-1">Période: ${candidature.besoin.periode}</p>
+                        <p class="mb-1">Remarques: ${candidature.besoin.remarques}</p>
+                        <p class="mb-1">Compétences: ${candidature.besoin.competences}</p>
+                    </a>
+                </c:forEach>
+            </div>
+        </c:when>
+        <c:when test="${user.role eq 'Recruteur'}">
+            <h3>Liste des besoins :</h3>
+            <div class="list-group">
+                <c:forEach items="${besoins}" var="besoin">
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <h5 class="mb-1">${besoin.ecole.nom}</h5>
+                        <p class="mb-1">Période: ${besoin.periode}</p>
+                        <p class="mb-1">Remarques: ${besoin.remarques}</p>
+                        <p class="mb-1">Compétences: ${besoin.competences}</p>
+                    </a>
+                </c:forEach>
+            </div>
+        </c:when>
+        <c:when test="${user.role eq 'Admin'}">
+            <h3>Liste d'Utilisateurs :</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="utilisateur" items="${utilisateurs}">
+                    <tr>
+                        <td>${utilisateur.nom}</td>
+                        <td>${utilisateur.prenom}</td>
+                        <td>${utilisateur.mail}</td>
+                        <td>${utilisateur.role}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:when>
+        <c:otherwise>
+            <p>Rôle non reconnu</p>
+        </c:otherwise>
+    </c:choose>
+</div>
+
 </body>
 </html>
