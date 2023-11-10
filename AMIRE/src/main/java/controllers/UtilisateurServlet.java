@@ -154,9 +154,11 @@ public class UtilisateurServlet extends HttpServlet {
     }
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter("userId"));
         utilisateurDAO.deleteUser(id);
-        // response.sendRedirect("users.jsp");
+        List<Utilisateur> utilisateurs = utilisateurDAO.getAllUtilisateurs();
+        request.getSession().setAttribute("utilisateurs", utilisateurs); //ajout de la liste des utilisateurs à la session
+        response.sendRedirect("dashboard.jsp");
     }
 
     private void getUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -181,10 +183,10 @@ public class UtilisateurServlet extends HttpServlet {
             request.getSession().setAttribute("user", utilisateur);
             if ("Enseignant".equals(role)) {
                 Enseignant enseignant = enseignantDAO.getEnseignantByUtilisateurId(utilisateurID);
-                // int enseignantID = enseignant.getID();
+                int enseignantID = enseignant.getID();
 
                 request.getSession().setAttribute("enseignant", enseignant); //ajout de l'enseignant à la session
-                request.getSession().setAttribute("enseignantID", enseignant.getID()); //ajout de l'enseignantID à la session
+                request.getSession().setAttribute("enseignantID", enseignantID); //ajout de l'enseignantID à la session
                 // request.getSession().setAttribute("enseignantID", enseignantID); //ajout de l'enseignantID à la session
 
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
@@ -197,7 +199,9 @@ public class UtilisateurServlet extends HttpServlet {
 
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
             } else if ("Admin".equals(role)) {
-                
+                List<Utilisateur> utilisateurs = utilisateurDAO.getAllUtilisateurs();
+                request.getSession().setAttribute("utilisateurs", utilisateurs); //ajout de la liste des utilisateurs à la session
+
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
             } else {
                 // Gérer d'autres rôles ou afficher un message d'erreur si le rôle n'est pas reconnu

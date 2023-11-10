@@ -12,6 +12,8 @@ import models.Enseignant;
 import java.util.Date;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 @WebServlet("/enseignant")
 public class EnseignantServlet extends HttpServlet {
@@ -65,7 +67,8 @@ public class EnseignantServlet extends HttpServlet {
         String telephone = request.getParameter("telephone");
         String siteWeb = request.getParameter("siteWeb");
         String niveauxSouhaites = request.getParameter("niveauxSouhaites");
-        Date disponibilites = new Date(request.getParameter("disponibilites"));
+        String dateStr = request.getParameter("disponibilites");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String typeContrat = request.getParameter("typeContrat");
         String titresAcademiques = request.getParameter("titresAcademiques");
         String evaluations = request.getParameter("evaluations");
@@ -78,7 +81,12 @@ public class EnseignantServlet extends HttpServlet {
         if (telephone != null) enseignant.setTelephone(telephone);
         if (siteWeb != null) enseignant.setSiteWeb(siteWeb);
         if (niveauxSouhaites != null) enseignant.setNiveauxSouhaites(niveauxSouhaites);
-        if (disponibilites != null) enseignant.setDisponibilites(disponibilites);
+        try {
+            Date dispo = formatter.parse(dateStr);
+            enseignant.setDisponibilites(dispo);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (typeContrat != null) enseignant.setTypeContrat(typeContrat);
         if (titresAcademiques != null) enseignant.setTitresAcademiques(titresAcademiques);
         if (evaluations != null) enseignant.setEvaluations(evaluations);
@@ -95,7 +103,8 @@ public class EnseignantServlet extends HttpServlet {
         String telephone = request.getParameter("telephone");
         String siteWeb = request.getParameter("siteWeb");
         String niveauxSouhaites = request.getParameter("niveauxSouhaites");
-        Date disponibilites = new Date(request.getParameter("disponibilites"));
+        String dateStr = request.getParameter("Disponibilites");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String typeContrat = request.getParameter("typeContrat");
         String titresAcademiques = request.getParameter("titresAcademiques");
         String evaluations = request.getParameter("evaluations");
@@ -112,14 +121,19 @@ public class EnseignantServlet extends HttpServlet {
         if (telephone != null) enseignant.setTelephone(telephone);
         if (siteWeb != null) enseignant.setSiteWeb(siteWeb);
         if (niveauxSouhaites != null) enseignant.setNiveauxSouhaites(niveauxSouhaites);
-        if (disponibilites != null) enseignant.setDisponibilites(disponibilites);
+        try {
+            Date dispo = formatter.parse(dateStr);
+            enseignant.setDisponibilites(dispo);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (typeContrat != null) enseignant.setTypeContrat(typeContrat);
         if (titresAcademiques != null) enseignant.setTitresAcademiques(titresAcademiques);
         if (evaluations != null) enseignant.setEvaluations(evaluations);
         if (autresInformations != null)enseignant.setAutresInformations(autresInformations);
         if (competences != null) enseignant.setCompetences(competences);
 
-        enseignantDAO.updateEnseignant(enseignant);
+        response.sendRedirect("profile.jsp");
     }
 
     private void deleteEnseignant(HttpServletRequest request, HttpServletResponse response) throws IOException {
