@@ -71,12 +71,18 @@ public class UtilisateurServlet extends HttpServlet {
         }
     }
 
-    private void createUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void createUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
         String mail = request.getParameter("mail");
         String motDePasse = request.getParameter("motDePasse");
         String role = request.getParameter("role");
+
+        if (utilisateurDAO.getUserByMail(mail) != null) {
+            request.setAttribute("registerError", true);
+            request.getRequestDispatcher("/register.jsp").forward(request, response);
+            return;
+        }
 
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setNom(nom);
@@ -184,25 +190,19 @@ public class UtilisateurServlet extends HttpServlet {
             if ("Enseignant".equals(role)) {
                 Enseignant enseignant = enseignantDAO.getEnseignantByUtilisateurId(utilisateurID);
                 int enseignantID = enseignant.getID();
-
                 request.getSession().setAttribute("enseignant", enseignant); //ajout de l'enseignant à la session
                 request.getSession().setAttribute("enseignantID", enseignantID); //ajout de l'enseignantID à la session
-                // request.getSession().setAttribute("enseignantID", enseignantID); //ajout de l'enseignantID à la session
-
-                request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/dashboard");
             } else if ("Recruteur".equals(role)) {
                 Ecole ecole = ecoleDAO.getEcoleByUtilisateurId(utilisateurID);
                 int ecoleID = ecole.getID();
-
                 request.getSession().setAttribute("ecole", ecole); //ajout de l'ecole à la session
                 request.getSession().setAttribute("ecoleID", ecoleID); //ajout de l'ecoleID à la session
-
-                request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/dashboard");
             } else if ("Admin".equals(role)) {
                 List<Utilisateur> utilisateurs = utilisateurDAO.getAllUtilisateurs();
                 request.getSession().setAttribute("utilisateurs", utilisateurs); //ajout de la liste des utilisateurs à la session
-
-                request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/dashboard");
             } else {
                 // Gérer d'autres rôles ou afficher un message d'erreur si le rôle n'est pas reconnu
                 response.sendRedirect("/erreur.jsp");
@@ -221,6 +221,6 @@ public class UtilisateurServlet extends HttpServlet {
             session.invalidate(); // Cela va détruire la session
         }
         // Rediriger vers la page de connexion ou la page d'accueil après la déconnexion
-        response.sendRedirect(request.getContextPath() + "/dashboard.jsp");
+        response.sendRedirect(request.getContextPath() + "/home.jsp");
     }
 }
