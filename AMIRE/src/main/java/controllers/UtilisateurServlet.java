@@ -110,10 +110,12 @@ public class UtilisateurServlet extends HttpServlet {
         } else if (role.contains("Recruteur")) {
             String raisonSociale = request.getParameter("RaisonSociale");
             String adresse = request.getParameter("Adresse");
+            String nomecole = request.getParameter("NomEcole");
 
             Ecole ecole = new Ecole();
             ecole.setRaisonSociale(raisonSociale);
             ecole.setAdresse(adresse);
+            ecole.setNom(nomecole);
 
             utilisateurDAO.addUser(utilisateur);
 
@@ -175,30 +177,27 @@ public class UtilisateurServlet extends HttpServlet {
         Utilisateur utilisateur = utilisateurDAO.login(mail, motDePasse);
         if (utilisateur != null) {
             String role = utilisateur.getRole();
+            int utilisateurID = utilisateur.getID();
             request.getSession().setAttribute("user", utilisateur);
             if ("Enseignant".equals(role)) {
-                Enseignant enseignant = enseignantDAO.getEnseignantByUtilisateurId(utilisateur.getID());
-                request.getSession().setAttribute("enseignant", enseignant); //ajout de l'enseignant à la session
+                Enseignant enseignant = enseignantDAO.getEnseignantByUtilisateurId(utilisateurID);
+                // int enseignantID = enseignant.getID();
 
-                System.out.println("Enseignant");
-                List<Candidature> candidatures = candidatureDAO.getCandidaturesByEnseignantId(utilisateur.getID());
-                System.out.println("Candidatures: " + candidatures);
-                request.setAttribute("listCandidatures", candidatures);
+                request.getSession().setAttribute("enseignant", enseignant); //ajout de l'enseignant à la session
+                request.getSession().setAttribute("enseignantID", enseignant.getID()); //ajout de l'enseignantID à la session
+                // request.getSession().setAttribute("enseignantID", enseignantID); //ajout de l'enseignantID à la session
+
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
             } else if ("Recruteur".equals(role)) {
-                Ecole ecole = ecoleDAO.getEcoleByUtilisateurId(utilisateur.getID());
-                request.getSession().setAttribute("ecole", ecole); //ajout de l'ecole à la session
+                Ecole ecole = ecoleDAO.getEcoleByUtilisateurId(utilisateurID);
+                int ecoleID = ecole.getID();
 
-                System.out.println("Recruteur");
-                List<Besoin> besoins = besoinDAO.getBesoinsByEcoleID(utilisateur.getID());
-                System.out.println("Besoins: " + besoins);
-                request.setAttribute("listBesoins", besoins);
+                request.getSession().setAttribute("ecole", ecole); //ajout de l'ecole à la session
+                request.getSession().setAttribute("ecoleID", ecoleID); //ajout de l'ecoleID à la session
+
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
             } else if ("Admin".equals(role)) {
-                System.out.println("Admin");
-                List<Utilisateur> users = utilisateurDAO.getAllUtilisateurs();
-                System.out.println("Users: " + users);
-                request.setAttribute("listUsers", users);
+                
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
             } else {
                 // Gérer d'autres rôles ou afficher un message d'erreur si le rôle n'est pas reconnu

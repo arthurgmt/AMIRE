@@ -51,9 +51,13 @@ public class BesoinServlet extends HttpServlet {
                 deleteBesoin(request, response);
                 break;
             case "list":
-                List<Besoin> besoins = getAllBesoin(request, response);
-                request.setAttribute("besoins", besoins);
-                request.getRequestDispatcher("/listBesoin.jsp").forward(request, response);
+                getAllBesoin(request, response);
+                break;
+            case "redirectUpdate":
+                int besoinId = Integer.parseInt(request.getParameter("id"));
+                Besoin besoin = besoinDAO.getBesoinById(besoinId);
+                request.setAttribute("besoin", besoin);
+                request.getRequestDispatcher("/updateBesoin.jsp").forward(request, response);
                 break;
             case "listEnseignantBesoin":
                 List<Besoin> besoinsEnseignant = getAllBesoin(request, response);
@@ -92,9 +96,9 @@ public class BesoinServlet extends HttpServlet {
 
     private void updateBesoin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int ID = Integer.parseInt(request.getParameter("ID"));
-        int EcoleID = Integer.parseInt(request.getParameter("EcoleID"));
-        String Periode = request.getParameter("Periode");
-        String Remarque = request.getParameter("Remarque");
+        int EcoleID = Integer.parseInt(request.getParameter("ecoleID"));
+        String Periode = request.getParameter("periode");
+        String Remarque = request.getParameter("remarque");
         String Competence = request.getParameter("Competence");
 
         Besoin besoin = besoinDAO.getBesoinById(ID);
@@ -107,12 +111,13 @@ public class BesoinServlet extends HttpServlet {
         if (Remarque != null) besoin.setRemarques(Remarque);
         if (Competence != null) besoin.setCompetences(Competence);
         besoinDAO.updateBesoin(besoin);
+        response.sendRedirect(request.getContextPath() + "/besoin?action=list");
     }
 
     private void deleteBesoin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         besoinDAO.deleteBesoin(id);
-        // response.sendRedirect("users.jsp");
+        response.sendRedirect(request.getContextPath() + "/besoin?action=list");
     }
 
     private void getBesoin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -127,8 +132,10 @@ public class BesoinServlet extends HttpServlet {
         }
     }
 
-    private List<Besoin> getAllBesoin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        return besoinDAO.getAllBesoins();
+    private void getAllBesoin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Besoin> besoins = besoinDAO.getAllBesoins();
+        request.setAttribute("besoins", besoins);
+        request.getRequestDispatcher("/listBesoin.jsp").forward(request, response);
     }
 
     private void getBesoinByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

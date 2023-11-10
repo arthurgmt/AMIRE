@@ -81,6 +81,10 @@
                     <label for="Adresse">Adresse:</label>
                     <input type="text" class="form-control" id="Adresse" name="Adresse">
                 </div>  
+                <div class="form-group">
+                    <label for="Nom">Nom:</label>
+                    <input type="text" class="form-control" id="NomEcole" name="Nom">
+                </div>
             </div>
 
             <input type="hidden" name="action" value="register">

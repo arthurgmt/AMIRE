@@ -58,7 +58,7 @@
                             </c:when>
                         </c:choose>
                         <li class="nav-item">
-                            <a class="nav-link" href="WEB-INF/profile.jsp">Profile</a>
+                            <a class="nav-link" href="profile.jsp">Profile</a>
                         </li>
                         <li class="nav-item">
                             <form action="utilisateur" method="post">

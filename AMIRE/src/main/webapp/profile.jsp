@@ -16,7 +16,8 @@
         <h3>Profile Enseignant:</h3>
         <!-- <%-- Form for Enseignant --%> -->
         <form action="enseignant" method="post">
-            <input type="text" name="Experience" placeholder="Experience" value="${enseignant.experience}">
+            <input type="hidden" name="id" value="${enseignantID}">
+            <input type="number" name="Experience" placeholder="Experience" value="${enseignant.experience}">
             <input type="text" name="Telephone" placeholder="Telephone" value="${enseignant.telephone}">
             <input type="text" name="SiteWeb" placeholder="SiteWeb" value="${enseignant.siteweb}">            
             <input type="text" name="NiveauxSouhaites" placeholder="NiveauxSouhaites" value="${enseignant.niveauxsouhaites}">            
@@ -35,10 +36,12 @@
         <h3>Profile Recruteur:</h3>
         <%-- Form for Recruteur --%>
         <form action="ecole" method="post">
-            <input type="text" name="RaisonSociale" placeholder="Raison Sociale" value="${recruteur.raisonSociale}">
-            <input type="text" name="Adresse" placeholder="Adresse" value="${recruteur.adresse}">
-            <input type="text" name="SiteWeb" placeholder="SiteWeb" value="${recruteur.siteweb}">
-            <input type="text" name="Contact" placeholder="Contact" value="${recruteur.contact}">
+            <input type="hidden" name="id" value="${ecoleID}"> 
+            <input type="text" name="RaisonSociale" placeholder="RaisonSociale" value="${ecole.raisonSociale}">
+            <input type="text" name="Adresse" placeholder="Adresse" value="${ecole.adresse}">
+            <input type="text" name="SiteWeb" placeholder="SiteWeb" value="${ecole.siteWeb}">
+            <input type="text" name="Contact" placeholder="Contact" value="${ecole.contact}">
+            <input type="text" name="Nom" placeholder="Nom" value="${ecole.nom}">
             
             <input type="hidden" name="action" value="update">
             <button type="submit">Mettre à jour</button>

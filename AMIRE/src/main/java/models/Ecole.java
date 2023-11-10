@@ -12,7 +12,7 @@ import jakarta.persistence.*;
 public class Ecole {
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
 
     @Column(name = "UtilisateurID", nullable = false)

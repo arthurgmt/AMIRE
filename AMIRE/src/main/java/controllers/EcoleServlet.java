@@ -67,6 +67,7 @@ public class EcoleServlet extends HttpServlet {
         String Adresse = request.getParameter("Adresse");
         String SiteWeb = request.getParameter("SiteWeb");
         String Contact = request.getParameter("Contact");
+        String Nom = request.getParameter("Nom");
 
         Ecole ecole = new Ecole();
         ecole.setUtilisateurID(UtilisateurID);
@@ -74,26 +75,31 @@ public class EcoleServlet extends HttpServlet {
         ecole.setAdresse(Adresse);
         ecole.setSiteWeb(SiteWeb);
         ecole.setContact(Contact);
+        ecole.setNom(Nom);
 
         ecoleDAO.addEcole(ecole);
         // response.sendRedirect("ecole.jsp");
     }
 
     private void updateEcole(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int UtilisateurID = Integer.parseInt(request.getParameter("UtilisateurID"));
+
+        int id = Integer.parseInt(request.getParameter("id"));
         String RaisonSociale = request.getParameter("RaisonSociale");
         String Adresse = request.getParameter("Adresse");
         String SiteWeb = request.getParameter("SiteWeb");
         String Contact = request.getParameter("Contact");
+        String Nom = request.getParameter("Nom");
 
-        Ecole ecole = new Ecole();
-        ecole.setUtilisateurID(UtilisateurID);
+        Ecole ecole = ecoleDAO.getEcoleById(id);
+
         ecole.setRaisonSociale(RaisonSociale);
         ecole.setAdresse(Adresse);
         ecole.setSiteWeb(SiteWeb);
         ecole.setContact(Contact);
+        ecole.setNom(Nom);  
 
         ecoleDAO.updateEcole(ecole);
+        response.sendRedirect("profile.jsp");
     }
 
     private void deleteEcole(HttpServletRequest request, HttpServletResponse response) throws IOException {
