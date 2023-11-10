@@ -12,6 +12,8 @@ import models.Enseignant;
 import java.util.Date;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 @WebServlet("/enseignant")
 public class EnseignantServlet extends HttpServlet {
@@ -65,7 +67,8 @@ public class EnseignantServlet extends HttpServlet {
         String telephone = request.getParameter("telephone");
         String siteWeb = request.getParameter("siteWeb");
         String niveauxSouhaites = request.getParameter("niveauxSouhaites");
-        Date disponibilites = new Date(request.getParameter("disponibilites"));
+        String dateStr = request.getParameter("disponibilites");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String typeContrat = request.getParameter("typeContrat");
         String titresAcademiques = request.getParameter("titresAcademiques");
         String evaluations = request.getParameter("evaluations");
@@ -77,8 +80,13 @@ public class EnseignantServlet extends HttpServlet {
         enseignant.setExperience(experience);
         enseignant.setTelephone(telephone);
         enseignant.setSiteWeb(siteWeb);
-        enseignant.setNiveauxSouhaites(niveauxSouhaites);
-        enseignant.setDisponibilites(disponibilites);
+        enseignant.setNiveauxSouhaites(niveauxSouhaites); 
+        try {
+            Date dispo = formatter.parse(dateStr);
+            enseignant.setDisponibilites(dispo);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         enseignant.setTypeContrat(typeContrat);
         enseignant.setTitresAcademiques(titresAcademiques);
         enseignant.setEvaluations(evaluations);
@@ -90,23 +98,30 @@ public class EnseignantServlet extends HttpServlet {
     }
 
     private void updateEnseignant(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Integer experience = Integer.parseInt(request.getParameter("experience"));
-        String telephone = request.getParameter("telephone");
-        String siteWeb = request.getParameter("siteWeb");
-        String niveauxSouhaites = request.getParameter("niveauxSouhaites");
-        Date disponibilites = new Date(request.getParameter("disponibilites"));
-        String typeContrat = request.getParameter("typeContrat");
-        String titresAcademiques = request.getParameter("titresAcademiques");
-        String evaluations = request.getParameter("evaluations");
-        String autresInformations = request.getParameter("autresInformations");
-        String competences = request.getParameter("competences");
+        int id = Integer.parseInt(request.getParameter("id"));
+        int experience = Integer.parseInt(request.getParameter("Experience"));
+        String telephone = request.getParameter("Telephone");
+        String siteWeb = request.getParameter("SiteWeb");
+        String niveauxSouhaites = request.getParameter("NiveauxSouhaites");
+        String dateStr = request.getParameter("Disponibilites");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String typeContrat = request.getParameter("TypeContrat");
+        String titresAcademiques = request.getParameter("TitresAcademiques");
+        String evaluations = request.getParameter("Evaluations");
+        String autresInformations = request.getParameter("AutresInformations");
+        String competences = request.getParameter("Competences");
 
-        Enseignant enseignant = new Enseignant();
+        Enseignant enseignant = enseignantDAO.getEnseignantById(id);
         enseignant.setExperience(experience);
         enseignant.setTelephone(telephone);
         enseignant.setSiteWeb(siteWeb);
         enseignant.setNiveauxSouhaites(niveauxSouhaites);
-        enseignant.setDisponibilites(disponibilites);
+        try {
+            Date dispo = formatter.parse(dateStr);
+            enseignant.setDisponibilites(dispo);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         enseignant.setTypeContrat(typeContrat);
         enseignant.setTitresAcademiques(titresAcademiques);
         enseignant.setEvaluations(evaluations);

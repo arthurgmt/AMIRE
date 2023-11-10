@@ -178,10 +178,10 @@ public class UtilisateurServlet extends HttpServlet {
             request.getSession().setAttribute("user", utilisateur);
             if ("Enseignant".equals(role)) {
                 Enseignant enseignant = enseignantDAO.getEnseignantByUtilisateurId(utilisateurID);
-                // int enseignantID = enseignant.getID();
+                int enseignantID = enseignant.getID();
 
                 request.getSession().setAttribute("enseignant", enseignant); //ajout de l'enseignant à la session
-                request.getSession().setAttribute("enseignantID", enseignant.getID()); //ajout de l'enseignantID à la session
+                request.getSession().setAttribute("enseignantID", enseignantID); //ajout de l'enseignantID à la session
                 // request.getSession().setAttribute("enseignantID", enseignantID); //ajout de l'enseignantID à la session
 
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
