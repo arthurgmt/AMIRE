@@ -14,7 +14,9 @@ import models.*;
 import java.util.Date;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.text.ParseException;
 
 @WebServlet("/utilisateur")
 public class UtilisateurServlet extends HttpServlet {
@@ -83,32 +85,41 @@ public class UtilisateurServlet extends HttpServlet {
         utilisateur.setMotDePasse(motDePasse);
         utilisateur.setRole(role);
 
-        if (role == "Enseignant") {
-            int utilisateurID = utilisateur.getID();
-            String telephone = request.getParameter("telephone");
-            Date disponibilites = new Date(request.getParameter("disponibilites"));
-            String competences = request.getParameter("competences");
+        if (role.contains("Enseignant")) {
+            String telephone = request.getParameter("Telephone");
+            String dateStr = request.getParameter("Disponibilite");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String competences = request.getParameter("Competence");
 
             Enseignant enseignant = new Enseignant();
 
-            enseignant.setUtilisateurID(utilisateurID);
             enseignant.setTelephone(telephone);
-            enseignant.setDisponibilites(disponibilites);
+            try {
+                Date disponibilites = formatter.parse(dateStr);
+                enseignant.setDisponibilites(disponibilites);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             enseignant.setCompetences(competences);
 
             utilisateurDAO.addUser(utilisateur);
+            int utilisateurID = utilisateurDAO.getUserByMail(mail).getID();
+            enseignant.setUtilisateurID(utilisateurID);
+
             enseignantDAO.addEnseignant(enseignant);
-        } else if (role == "Recruteur") {
-            int utilisateurID = utilisateur.getID();
-            String raisonSociale = request.getParameter("raisonSociale");
-            String adresse = request.getParameter("adresse");
+        } else if (role.contains("Recruteur")) {
+            String raisonSociale = request.getParameter("RaisonSociale");
+            String adresse = request.getParameter("Adresse");
 
             Ecole ecole = new Ecole();
-            ecole.setUtilisateurID(utilisateurID);
             ecole.setRaisonSociale(raisonSociale);
             ecole.setAdresse(adresse);
 
             utilisateurDAO.addUser(utilisateur);
+
+            int utilisateurID = utilisateurDAO.getUserByMail(mail).getID();
+            ecole.setUtilisateurID(utilisateurID);
+
             ecoleDAO.addEcole(ecole);
         } else {
             utilisateurDAO.addUser(utilisateur);
@@ -163,12 +174,18 @@ public class UtilisateurServlet extends HttpServlet {
             String role = utilisateur.getRole();
             request.getSession().setAttribute("user", utilisateur);
             if ("Enseignant".equals(role)) {
+                Enseignant enseignant = enseignantDAO.getEnseignantByUtilisateurId(utilisateur.getID());
+                request.getSession().setAttribute("enseignant", enseignant); //ajout de l'enseignant à la session
+
                 System.out.println("Enseignant");
                 List<Candidature> candidatures = candidatureDAO.getCandidaturesByEnseignantId(utilisateur.getID());
                 System.out.println("Candidatures: " + candidatures);
                 request.setAttribute("listCandidatures", candidatures);
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
             } else if ("Recruteur".equals(role)) {
+                Ecole ecole = ecoleDAO.getEcoleByUtilisateurId(utilisateur.getID());
+                request.getSession().setAttribute("ecole", ecole); //ajout de l'ecole à la session
+
                 System.out.println("Recruteur");
                 List<Besoin> besoins = besoinDAO.getBesoinsByEcoleID(utilisateur.getID());
                 System.out.println("Besoins: " + besoins);

@@ -25,7 +25,7 @@
                     </c:when>
                     <c:otherwise>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Profile</a>
+                            <a class="nav-link" href="WEB-INF/profile.jsp">Profile</a>
                         </li>
                         <li class="nav-item">
                             <form action="utilisateur" method="post">
