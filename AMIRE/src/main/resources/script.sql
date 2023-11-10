@@ -58,3 +58,5 @@ CREATE TABLE Candidature (
     FOREIGN KEY (BesoinID) REFERENCES Besoin(ID),
     UNIQUE (EnseignantID, BesoinID)
 );
+
+INSERT INTO Utilisateur (Nom, Prenom, Mail, MotDePasse, Role) VALUES ('admin', 'admin', 'root@mail.fr', 'root', 'Admin');
