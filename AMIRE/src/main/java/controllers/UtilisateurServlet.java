@@ -174,15 +174,23 @@ public class UtilisateurServlet extends HttpServlet {
         Utilisateur utilisateur = utilisateurDAO.login(mail, motDePasse);
         if (utilisateur != null) {
             String role = utilisateur.getRole();
+            int utilisateurID = utilisateur.getID();
             request.getSession().setAttribute("user", utilisateur);
             if ("Enseignant".equals(role)) {
-                Enseignant enseignant = enseignantDAO.getEnseignantByUtilisateurId(utilisateur.getID());
+                Enseignant enseignant = enseignantDAO.getEnseignantByUtilisateurId(utilisateurID);
+                // int enseignantID = enseignant.getID();
+
                 request.getSession().setAttribute("enseignant", enseignant); //ajout de l'enseignant à la session
+                request.getSession().setAttribute("enseignantID", enseignant.getID()); //ajout de l'enseignantID à la session
+                // request.getSession().setAttribute("enseignantID", enseignantID); //ajout de l'enseignantID à la session
 
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
             } else if ("Recruteur".equals(role)) {
-                Ecole ecole = ecoleDAO.getEcoleByUtilisateurId(utilisateur.getID());
+                Ecole ecole = ecoleDAO.getEcoleByUtilisateurId(utilisateurID);
+                int ecoleID = ecole.getID();
+
                 request.getSession().setAttribute("ecole", ecole); //ajout de l'ecole à la session
+                request.getSession().setAttribute("ecoleID", ecoleID); //ajout de l'ecoleID à la session
 
                 request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
             } else if ("Admin".equals(role)) {

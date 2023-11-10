@@ -99,6 +99,7 @@ public class EcoleServlet extends HttpServlet {
         ecole.setNom(Nom);  
 
         ecoleDAO.updateEcole(ecole);
+        response.sendRedirect("profile.jsp");
     }
 
     private void deleteEcole(HttpServletRequest request, HttpServletResponse response) throws IOException {

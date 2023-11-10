@@ -84,6 +84,7 @@
                 <div class="form-group">
                     <label for="Nom">Nom:</label>
                     <input type="text" class="form-control" id="Nom" name="Nom">
+                </div>
             </div>
 
             <input type="hidden" name="action" value="register">
