@@ -76,13 +76,18 @@ public class DecisionServlet  extends HttpServlet {
     }
 
     private void updateDecision(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int ID = Integer.parseInt(request.getParameter("ID"));
         String Status = request.getParameter("Status");
         String Commentaires = request.getParameter("Commentaires");
 
-        Decision decision = new Decision();
+        Decision decision = decisionDAO.getDecisionById(ID);
+        if (decision == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Decision not found");
+            return;
+        }
         decision.setDateDecision(new Date());
-        decision.setCommentaires(Commentaires);
-        decision.setStatut(Status);
+        if (Commentaires != null) decision.setCommentaires(Commentaires);
+        if (Status != null) decision.setStatut(Status);
 
         decisionDAO.updateDecision(decision);
     }
