@@ -129,6 +129,7 @@ public class EnseignantServlet extends HttpServlet {
         enseignant.setCompetences(competences);
 
         enseignantDAO.updateEnseignant(enseignant);
+        response.sendRedirect("profile.jsp");
     }
 
     private void deleteEnseignant(HttpServletRequest request, HttpServletResponse response) throws IOException {
