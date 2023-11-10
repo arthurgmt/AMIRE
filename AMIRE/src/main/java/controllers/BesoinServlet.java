@@ -55,6 +55,11 @@ public class BesoinServlet extends HttpServlet {
                 request.setAttribute("besoins", besoins);
                 request.getRequestDispatcher("/listBesoin.jsp").forward(request, response);
                 break;
+            case "listEnseignantBesoin":
+                List<Besoin> besoinsEnseignant = getAllBesoin(request, response);
+                request.setAttribute("besoins", besoinsEnseignant);
+                request.getRequestDispatcher("/BesoinEnseignant.jsp").forward(request, response);
+                break;
             case "get":
                 getBesoin(request, response);
                 break;
@@ -76,10 +81,10 @@ public class BesoinServlet extends HttpServlet {
         String Competence = request.getParameter("competences");
 
         Besoin besoin = new Besoin();
-        besoin.setEcoleID(EcoleID);
-        besoin.setPeriode(Periode);
-        besoin.setRemarques(Remarque);
-        besoin.setCompetences(Competence);
+        if (EcoleID >= 0) besoin.setEcoleID(EcoleID);
+        if (Periode != null) besoin.setPeriode(Periode);
+        if (Remarque != null) besoin.setRemarques(Remarque);
+        if (Competence != null) besoin.setCompetences(Competence);
 
         besoinDAO.addBesoin(besoin);
         response.sendRedirect(request.getContextPath() + "/besoin?action=list");
@@ -94,10 +99,10 @@ public class BesoinServlet extends HttpServlet {
 
         Besoin besoin = besoinDAO.getBesoinById(ID);
         if (besoin == null) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "candidature not found");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Besoin not found");
             return;
         }
-        if (EcoleID != 0) besoin.setEcoleID(EcoleID);
+        if (EcoleID >= 0) besoin.setEcoleID(EcoleID);
         if (Periode != null) besoin.setPeriode(Periode);
         if (Remarque != null) besoin.setRemarques(Remarque);
         if (Competence != null) besoin.setCompetences(Competence);
@@ -128,8 +133,9 @@ public class BesoinServlet extends HttpServlet {
 
     private void getBesoinByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
-        request.setAttribute("users", besoinDAO.getBesoinsByEcoleName(name));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/users.jsp");
+        request.setAttribute("besoins", besoinDAO.getBesoinsByEcoleName(name));
+        request.setAttribute("recherche", name);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/BesoinEnseignant.jsp");
         dispatcher.forward(request, response);
     }
 

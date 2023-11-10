@@ -66,10 +66,10 @@ public class DecisionServlet  extends HttpServlet {
         String Commentaires = request.getParameter("Commentaires");
 
         Decision decision = new Decision();
-        decision.setCandidatureID(CandidatureID);
+        if (CandidatureID >= 0) decision.setCandidatureID(CandidatureID);
         decision.setDateDecision(new Date());
-        decision.setCommentaires(Commentaires);
-        decision.setStatut(Status);
+        if (Commentaires != null)decision.setCommentaires(Commentaires);
+        if (Status != null) decision.setStatut(Status);
 
         decisionDAO.addDecision(decision);
         // response.sendRedirect("ecole.jsp");

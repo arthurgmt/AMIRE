@@ -14,7 +14,6 @@ public class Candidature {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
     private int ID;
 
     @Column(name = "EnseignantID", nullable = false)

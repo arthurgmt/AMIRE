@@ -12,6 +12,7 @@ import models.Candidature;
 import models.Ecole;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/candidature")
 public class CandidatureServlet extends HttpServlet {
@@ -34,6 +35,9 @@ public class CandidatureServlet extends HttpServlet {
             case "update":
                 updateCandidature(request, response);
                 break;
+            case "delete":
+                deleteCandidature(request, response);
+                break;
         }
     }
 
@@ -51,6 +55,10 @@ public class CandidatureServlet extends HttpServlet {
             case "get":
                 getCandidature(request, response);
                 break;
+            case "getbyenseignant":
+                request.setAttribute("candidatures", getCandidatureByEnseignant(request, response));
+                request.getRequestDispatcher("/ListeCandidature.jsp").forward(request, response);
+                break;
         }
     }
 
@@ -59,11 +67,11 @@ public class CandidatureServlet extends HttpServlet {
         int BesoinID = Integer.parseInt(request.getParameter("BesoinID"));
 
         Candidature candidature = new Candidature();
-        candidature.setEnseignantID(EnseignantID);
-        candidature.setBesoinID(BesoinID);
+        if (EnseignantID >= 0) candidature.setEnseignantID(EnseignantID);
+        if (BesoinID >= 0) candidature.setBesoinID(BesoinID);
 
         candidatureDAO.addCandidature(candidature);
-        // response.sendRedirect("ecole.jsp");
+        response.sendRedirect(request.getContextPath() + "/besoin?action=listEnseignantBesoin");
     }
 
     private void updateCandidature(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -77,15 +85,17 @@ public class CandidatureServlet extends HttpServlet {
              return;
          }
 
-        if (EnseignantID != 0) candidature.setEnseignantID(EnseignantID);
-        if (BesoinID != 0) candidature.setBesoinID(BesoinID);
+        if (EnseignantID >= 0) candidature.setEnseignantID(EnseignantID);
+        if (BesoinID >= 0) candidature.setBesoinID(BesoinID);
 
         candidatureDAO.updateCandidature(candidature);
     }
 
     private void deleteCandidature(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter("ID"));
+        int EnseignantID = Integer.parseInt(request.getParameter("EnseignantID"));
         candidatureDAO.deleteCandidature(id);
+        response.sendRedirect(request.getContextPath() + "/candidature?action=getbyenseignant&id=" + EnseignantID);
         // response.sendRedirect("users.jsp");
     }
 
@@ -107,11 +117,9 @@ public class CandidatureServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void getCandidatureByEnseignant(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private List<Candidature> getCandidatureByEnseignant(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        request.setAttribute("users", candidatureDAO.getCandidaturesByEnseignantId(id));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/users.jsp");
-        dispatcher.forward(request, response);
+        return candidatureDAO.getCandidaturesByEnseignantId(id);
     }
 
     private void getCandidatureByCompetenceAndBesoinID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

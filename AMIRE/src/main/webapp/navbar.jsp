@@ -32,6 +32,12 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="enseignant">Enseignant</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/besoin?action=listEnseignantBesoin">Postes disponibles</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/candidature?action=getbyenseignant&id=${enseignant.ID}">Mes candidatures</a>
+                                </li>
                             </c:when>
                             <c:when test="${user.role == 'Recruteur'}">
                                 <li class="nav-item dropdown">

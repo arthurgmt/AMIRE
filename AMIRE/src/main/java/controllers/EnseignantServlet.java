@@ -73,17 +73,17 @@ public class EnseignantServlet extends HttpServlet {
         String competences = request.getParameter("competences");
 
         Enseignant enseignant = new Enseignant();
-        enseignant.setUtilisateurID(UtilisateurID);
-        enseignant.setExperience(experience);
-        enseignant.setTelephone(telephone);
-        enseignant.setSiteWeb(siteWeb);
-        enseignant.setNiveauxSouhaites(niveauxSouhaites);
-        enseignant.setDisponibilites(disponibilites);
-        enseignant.setTypeContrat(typeContrat);
-        enseignant.setTitresAcademiques(titresAcademiques);
-        enseignant.setEvaluations(evaluations);
-        enseignant.setAutresInformations(autresInformations);
-        enseignant.setCompetences(competences);
+        if (UtilisateurID >= 0) enseignant.setUtilisateurID(UtilisateurID);
+        if (experience >= 0) enseignant.setExperience(experience);
+        if (telephone != null) enseignant.setTelephone(telephone);
+        if (siteWeb != null) enseignant.setSiteWeb(siteWeb);
+        if (niveauxSouhaites != null) enseignant.setNiveauxSouhaites(niveauxSouhaites);
+        if (disponibilites != null) enseignant.setDisponibilites(disponibilites);
+        if (typeContrat != null) enseignant.setTypeContrat(typeContrat);
+        if (titresAcademiques != null) enseignant.setTitresAcademiques(titresAcademiques);
+        if (evaluations != null) enseignant.setEvaluations(evaluations);
+        if (autresInformations != null)enseignant.setAutresInformations(autresInformations);
+        if (competences != null) enseignant.setCompetences(competences);
 
         enseignantDAO.addEnseignant(enseignant);
         response.sendRedirect("login.jsp");
@@ -108,7 +108,7 @@ public class EnseignantServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Enseignant not found");
             return;
         }
-        if (experience != 0) enseignant.setExperience(experience);
+        if (experience >= 0) enseignant.setExperience(experience);
         if (telephone != null) enseignant.setTelephone(telephone);
         if (siteWeb != null) enseignant.setSiteWeb(siteWeb);
         if (niveauxSouhaites != null) enseignant.setNiveauxSouhaites(niveauxSouhaites);
