@@ -8,6 +8,7 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "Decision.findAll", query = "SELECT d FROM Decision d"),
         @NamedQuery(name = "Decision.findByCandidatureID", query = "SELECT d FROM Decision d WHERE d.CandidatureID = :CandidatureID"),
+        @NamedQuery(name = "Decision.findAllByBesoinID", query = "SELECT d FROM Decision d WHERE d.CandidatureID = (SELECT c.ID FROM Candidature c WHERE c.BesoinID = :BesoinID)")
 })
 public class Decision {
 

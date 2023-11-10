@@ -48,10 +48,20 @@ public class DecisionBean {
         }
     }
 
-    public List<Decision> getDecisionsByCandidatureId(int CandidatureID) {
+    public Decision getDecisionByCandidatureId(int CandidatureID) {
         try{
             return em.createNamedQuery("Decision.findByCandidatureID", Decision.class)
                     .setParameter("CandidatureID", CandidatureID)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public List<Decision> getDecisionsByBesoinId(int BesoinID) {
+        try{
+            return em.createNamedQuery("Decision.findAllByBesoinID", Decision.class)
+                    .setParameter("BesoinID", BesoinID)
                     .getResultList();
         } catch (Exception e) {
             return null;

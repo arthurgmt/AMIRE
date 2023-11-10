@@ -51,6 +51,12 @@ public class DecisionServlet  extends HttpServlet {
             case "get":
                 getDecision(request, response);
                 break;
+            case "getbycandidature":
+                getDecisionByCandidature(request, response);
+                break;
+            case "getbybesoin":
+                getDecisionsByBesoin(request, response);
+                break;
         }
     }
 
@@ -97,6 +103,25 @@ public class DecisionServlet  extends HttpServlet {
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Decision not found");
         }
+    }
+
+    private void getDecisionByCandidature(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Decision decision = decisionDAO.getDecisionByCandidatureId(id);
+        if (decision != null) {
+            request.setAttribute("user", decision);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/user-detail.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Decision not found");
+        }
+    }
+
+    private void getDecisionsByBesoin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int besoinID = Integer.parseInt(request.getParameter("besoinID"));
+        request.setAttribute("enseignants", decisionDAO.getDecisionsByBesoinId(besoinID));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/user/enseignant.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void getAllDecision(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
