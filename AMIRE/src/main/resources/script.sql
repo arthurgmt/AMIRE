@@ -1,5 +1,3 @@
--- CREATE DATABASE Amire;
--- USE Amire;
 CREATE TABLE Utilisateur(
     ID SERIAL PRIMARY KEY,
     Nom VARCHAR(255) NOT NULL ,
@@ -41,15 +39,6 @@ CREATE TABLE Besoin (
     Competences TEXT NOT NULL,
     FOREIGN KEY (EcoleID) REFERENCES Ecole(ID)
 );
-CREATE TABLE Decision (
-    ID SERIAL PRIMARY KEY,
-    CandidatureID INT NOT NULL,
-    Statut VARCHAR(50) NOT NULL,
-    DateDecision DATE NOT NULL,
-    Commentaires TEXT,
-    FOREIGN KEY (CandidatureID) REFERENCES Candidature(ID),
-    UNIQUE (CandidatureID)
-);
 CREATE TABLE Candidature (
     ID SERIAL PRIMARY KEY,
     EnseignantID INT NOT NULL,
@@ -58,4 +47,31 @@ CREATE TABLE Candidature (
     FOREIGN KEY (BesoinID) REFERENCES Besoin(ID),
     UNIQUE (EnseignantID, BesoinID)
 );
+CREATE TABLE Decision (
+                          ID SERIAL PRIMARY KEY,
+                          CandidatureID INT NOT NULL,
+                          Statut VARCHAR(50) NOT NULL,
+                          DateDecision DATE NOT NULL,
+                          Commentaires TEXT,
+                          FOREIGN KEY (CandidatureID) REFERENCES Candidature(ID),
+                          UNIQUE (CandidatureID)
+);
 INSERT INTO Utilisateur (Nom, Prenom, Mail, MotDePasse, Role) VALUES ('admin', 'admin', 'root@mail.fr', 'root', 'Admin');
+INSERT INTO Utilisateur (Nom, Prenom, Mail, MotDePasse, Role) VALUES
+('EnseignantNom', 'EnseignantPrenom', 'enseignant@example.com', 'motDePasseEnseignant', 'Enseignant'),
+('RecruteurNom', 'RecruteurPrenom', 'recruteur@example.com', 'motDePasseRecruteur', 'Recruteur');
+
+INSERT INTO Enseignant (UtilisateurID, Experience, Telephone, SiteWeb, NiveauxSouhaites, Disponibilites, TypeContrat, TitresAcademiques, Evaluations, AutresInformations, Competences) VALUES
+                                                                                                                                                                                           (1, 5, '123456789', 'www.enseignant1.com', 'Niveaux1, Niveaux2', '2023-01-01', 'CDI', 'Licence Informatique', 'Evaluations1', 'Autres Informations1', 'Java, Python'),
+                                                                                                                                                                                           (2, 3, '987654321', 'www.enseignant2.com', 'Niveaux3, Niveaux4', '2023-02-01', 'CDD', 'Master Informatique', 'Evaluations2', 'Autres Informations2', 'C++, SQL');
+INSERT INTO Ecole (UtilisateurID, RaisonSociale, Adresse, SiteWeb, Contact, Nom) VALUES
+(2, 'Ecole1 Raison Sociale', 'Adresse Ecole 1', 'www.ecole1.com', 'Contact Ecole 1', 'Ecole1 Nom'),
+(3, 'Ecole2 Raison Sociale', 'Adresse Ecole 2', 'www.ecole2.com', 'Contact Ecole 2', 'Ecole2 Nom');
+
+INSERT INTO Besoin (EcoleID, Periode, Remarques, Competences) VALUES
+(1, '2023-03-01', 'Remarques Besoin 1', 'Java, Python'),
+(2, '2023-04-01', 'Remarques Besoin 2', 'C++, SQL');
+
+INSERT INTO Candidature (EnseignantID, BesoinID) VALUES
+(1, 1),
+(2, 2);
