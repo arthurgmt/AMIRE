@@ -65,4 +65,14 @@ public class UtilisateurBean {
             return null;
         }
     }
+
+    public Utilisateur getUserByMail(String mail) {
+        try {
+            return em.createNamedQuery("Utilisateur.findByMail", Utilisateur.class)
+                    .setParameter("Mail", mail)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

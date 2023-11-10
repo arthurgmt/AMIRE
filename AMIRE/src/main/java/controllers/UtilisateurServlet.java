@@ -13,7 +13,9 @@ import models.*;
 import java.util.Date;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.text.ParseException;
 
 @WebServlet("/utilisateur")
 public class UtilisateurServlet extends HttpServlet {
@@ -79,32 +81,41 @@ public class UtilisateurServlet extends HttpServlet {
         utilisateur.setMotDePasse(motDePasse);
         utilisateur.setRole(role);
 
-        if (role == "Enseignant") {
-            int utilisateurID = utilisateur.getID();
-            String telephone = request.getParameter("telephone");
-            Date disponibilites = new Date(request.getParameter("disponibilites"));
-            String competences = request.getParameter("competences");
+        if (role.contains("Enseignant")) {
+            String telephone = request.getParameter("Telephone");
+            String dateStr = request.getParameter("Disponibilite");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String competences = request.getParameter("Competence");
 
             Enseignant enseignant = new Enseignant();
 
-            enseignant.setUtilisateurID(utilisateurID);
             enseignant.setTelephone(telephone);
-            enseignant.setDisponibilites(disponibilites);
+            try {
+                Date disponibilites = formatter.parse(dateStr);
+                enseignant.setDisponibilites(disponibilites);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             enseignant.setCompetences(competences);
 
             utilisateurDAO.addUser(utilisateur);
+            int utilisateurID = utilisateurDAO.getUserByMail(mail).getID();
+            enseignant.setUtilisateurID(utilisateurID);
+
             enseignantDAO.addEnseignant(enseignant);
-        } else if (role == "Recruteur") {
-            int utilisateurID = utilisateur.getID();
-            String raisonSociale = request.getParameter("raisonSociale");
-            String adresse = request.getParameter("adresse");
+        } else if (role.contains("Recruteur")) {
+            String raisonSociale = request.getParameter("RaisonSociale");
+            String adresse = request.getParameter("Adresse");
 
             Ecole ecole = new Ecole();
-            ecole.setUtilisateurID(utilisateurID);
             ecole.setRaisonSociale(raisonSociale);
             ecole.setAdresse(adresse);
 
             utilisateurDAO.addUser(utilisateur);
+
+            int utilisateurID = utilisateurDAO.getUserByMail(mail).getID();
+            ecole.setUtilisateurID(utilisateurID);
+
             ecoleDAO.addEcole(ecole);
         } else {
             utilisateurDAO.addUser(utilisateur);
